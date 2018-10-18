@@ -161,7 +161,7 @@ $(document).ready(function()
 		{
 			if(min>0 && sec>0)
 			{
-				this.startTimer = setInterval(function(){countdown();},100);
+				this.startTimer = setInterval(function(){countdown();},50);
 			}
 			this.running = true;
 			console.log(timerID+" running: "+this.running);
