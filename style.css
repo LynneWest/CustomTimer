@@ -82,6 +82,12 @@ body {
 	height: 50px;
 	margin-bottom: 25px;	
 }
+
+#adjust-timers ul {
+	list-style-type: none;
+	padding: 0%;
+}
+
 input {
 	margin-top: 5px;
 }

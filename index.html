@@ -102,11 +102,13 @@
 					</div>
 					<div class="col-sm-4">
 						<h4>Adjust Timer Minutes:</h4>
-						<form>
-							On Deck Timer: <input type="number" class="input-minutes" id="deckInput"> minutes<br>
-							Station 1 Timer: <input type="number" class="input-minutes" id="oneInput"> minutes<br>
-							Station 2 Timer: <input type="number" class="input-minutes" id="twoInput"> minutes<br>
-							Station 3 Timer: <input type="number" class="input-minutes" id="threeInput"> minutes<br>
+						<form id="adjust-timers">
+							<ul>
+								<li>On Deck Timer: <input type="number" class="input-minutes" id="deckInput"> minutes<br></li>
+								<li>Station 1 Timer: <input type="number" class="input-minutes" id="oneInput"> minutes<br></li>
+								<li>Station 2 Timer: <input type="number" class="input-minutes" id="twoInput"> minutes<br></li>
+								<li id="three-time-box" class="hidden">Station 3 Timer: <input type="number" class="input-minutes" id="threeInput"> minutes<br></li>
+							</ul>
 						</form>
 						<button type="button" class="btn submit" id="submit-time">Submit</button>						
 					</div>

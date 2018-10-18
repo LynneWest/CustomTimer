@@ -42,12 +42,14 @@ $(document).ready(function()
         	if($("#2").is(":checked"))
         	{
         		$(".two-timers").removeClass("hidden");
-        		$(".three-timers").addClass("hidden");        		
+				$(".three-timers").addClass("hidden");
+				$("#three-time-box").addClass("hidden");        		
         	}
         	else
         	{
         		$(".two-timers").addClass("hidden");
-        		$(".three-timers").removeClass("hidden");
+				$(".three-timers").removeClass("hidden");
+				$("#three-time-box").removeClass("hidden");
         		onDeck.reset();
 				station1.reset();
 				station2.reset();
