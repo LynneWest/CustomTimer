@@ -37,7 +37,7 @@ $(document).ready(function()
 	//Display two timers or three timers depending on radio button selection
 	$(function()
 	{
-    	$("input[name=stations]").change(function() 
+    	$("input[name=stations]").change(function() //start function when a change to the number of stations radio value is committed by the user
     	{     
         	if($("#2").is(":checked"))
         	{
@@ -53,8 +53,7 @@ $(document).ready(function()
         		onDeck.reset();
 				station1.reset();
 				station2.reset();
-				station3.reset();
-				//ghostTimer.reset();
+				station3.reset();				
         	}        
     	});
 	});	
@@ -77,7 +76,7 @@ $(document).ready(function()
 		$(".station-three").html("");//make station3 crew blank		
 	}
 
-	//move crew numbers through timers
+	//move crew numbers through stations
 	var y = -1;
 	function next()
 	{	
@@ -303,7 +302,7 @@ $(document).ready(function()
 		//ghostTimer.reset();
 	});
 	
-	//move crews through timers when next button is clicked
+	//move crews through stations when next button is clicked
 	$("#next").click(function()
 	{
 		next();
@@ -353,11 +352,13 @@ $(document).ready(function()
 		station3.startCountdown();
 	});
 
-
+	//When submit button is pushed set and display crew order, set first crews to stations, clear station two and three crew assignments
 	$("#submit-crew").click(function()
 	{
 		set();						
-	});		
+	});
+	
+	//When adjust-timer-minutes submit button is pushed adjust timers to user input minutes
 	$("#submit-time").click(function()
 	{		
 		newTime();
