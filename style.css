@@ -49,6 +49,35 @@ body {
 	width: 100%;
 	text-align: center;
 }
+
+.red-timer {
+	background-color: #c9302c;
+	font-weight: bold;	
+}
+
+.fade-red {
+	animation-duration: 3s;
+	animation-name: fadeRed;
+  }
+  
+  @keyframes fadeRed {
+	from {
+	  background-color: #c9302c; 
+	}
+  
+	to {
+	  background-color: black;
+	}
+  }
+/* .fade-red {
+	background-color:blue;
+	-webkit-transition: background-color 5s;
+	-moz-transition: background-color 5s;
+	-ms-transition: background-color 5s;
+	-o-transition: background-color 5s;
+	transition: background-color 5s;
+} */
+
 .timers {
 	text-align: center;
 }

@@ -166,7 +166,7 @@ $(document).ready(function()
 				this.startTimer = setInterval(function(){countdown();},50);
 			}
 			this.running = true;
-			console.log(timerID+" running: "+this.running);
+			//console.log(timerID+" running: "+this.running);
 			//self.done = false;
 			//console.log(timerID+" done: "+self.done);
 		};
@@ -186,7 +186,7 @@ $(document).ready(function()
 			{				
 				self.stopCountdown();
 				self.done = true;
-				console.log(timerID+" done: "+self.done);								
+				//console.log(timerID+" done: "+self.done);								
 				doneFunc();
 				self.reset();				
 				//$(timerID).html(minute+":00");
@@ -203,7 +203,21 @@ $(document).ready(function()
 			else
 			{
 				$(timerID).html(min+":0"+sec);
-			}																				
+			}
+			
+			if(min===0 && timerID != "#deck-timer")
+			{
+				$(timerID).addClass("red-timer");
+			}
+			else
+			{
+				$(timerID).removeClass("red-timer")
+			}
+
+			if(min===minute/2 && sec===1 && timerID != "#deck-timer")
+			{
+				$(timerID).addClass("fade-red")								
+			}			
 		}
 
 		this.addMin = function()
@@ -242,7 +256,7 @@ $(document).ready(function()
 				$(crewTimer).html(crewArray[this.crew]);
 				this.crew++;
 			}
-		};	
+		};		
 	}
 
 	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput");
@@ -251,24 +265,31 @@ $(document).ready(function()
 	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");
 	//var ghostTimer = new Timer(450);
 
+	// var timeWarning = function()
+	// {
+	// 	var timerNum = ['.timer-one', '.timer-two', '.timer-three'];
+	// 	$(timerNum).addClass("red-timer");
+	// 	console.log(timerNum)			
+	// }
+	
 	var doneFunc = function()
+	{
+		if(onDeck.done && station1.running === false)
 		{
-			if(onDeck.done && station1.running === false)
-			{
-				station1.startCountdown();
-				station1.nextCrew(".station-one");
-			}
-			if(station1.done && station2.running === false)
-			{
-				station2.startCountdown();
-				station2.nextCrew(".station-two");
-				//station1.nextCrew(undefined,".station-one");
-			}
-			if(station2.done && station3.running === false)
-			{
-				station3.startCountdown();
-			}							
-		}		
+			station1.startCountdown();
+			station1.nextCrew(".station-one");
+		}
+		if(station1.done && station2.running === false)
+		{
+			station2.startCountdown();
+			station2.nextCrew(".station-two");
+			//station1.nextCrew(undefined,".station-one");
+		}
+		if(station2.done && station3.running === false)
+		{
+			station3.startCountdown();
+		}							
+	}		
 
 	$("#go").click(function()
 	{
