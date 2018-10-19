@@ -34,30 +34,27 @@ $(document).ready(function()
 	$("#timer-two").html(stationTwoTimer+":00");
 	$("#timer-three").html(stationThreeTimer+":00");
 
-	//Display two timers or three timers depending on radio button selection
-	$(function()
-	{
-    	$("input[name=stations]").change(function() //start function when a change to the number of stations radio value is committed by the user
-    	{     
-        	if($("#2").is(":checked"))
-        	{
-        		$(".two-timers").removeClass("hidden");
-				$(".three-timers").addClass("hidden");
-				$("#three-time-box").addClass("hidden");        		
-        	}
-        	else
-        	{
-        		$(".two-timers").addClass("hidden");
-				$(".three-timers").removeClass("hidden");
-				$("#three-time-box").removeClass("hidden");
-        		onDeck.reset();
-				station1.reset();
-				station2.reset();
-				station3.reset();				
-        	}        
-    	});
-	});	
-	
+	//Display two timers or three timers depending on radio button selection	
+	$("input[name=stations]").change(function() //start function when a change to the number of stations radio value is committed by the user
+	{     
+		if($("#2").is(":checked"))
+		{
+			$(".two-timers").removeClass("hidden");
+			$(".three-timers").addClass("hidden");
+			$("#three-time-box").addClass("hidden");        		
+		}
+		else
+		{
+			$(".two-timers").addClass("hidden");
+			$(".three-timers").removeClass("hidden");
+			$("#three-time-box").removeClass("hidden");
+			onDeck.reset();
+			station1.reset();
+			station2.reset();
+			station3.reset();				
+		}        
+	});
+		
 	//set and display crew order
 	//set first crews to timers
 	//clear station two and three crew assignments
