@@ -63,25 +63,25 @@ $(document).ready(function()
 	//set first crews to timers
 	//clear station two and three crew assignments
 	var crewArray = [];
-	var order;
-	var y = 0-1;
+	var order;	
 	function set()
 	{
 		crewArray = [];
-		//order;
-		y = 0-1;
-		order = $("#order").val();
-		$("#crew-order").html(order);
-		crewArray = order.split(",");
-		$("#deck").html(crewArray[1]);
-		$(".station-one").html(crewArray[0]);
-		$(".station-two").html("");
-		$(".station-three").html("");
+		//y = 0-1;
+		order = $("#order").val(); //put crew-order values from crew-order form into string
+		$("#crew-order").html(order); //display current crew order
+		crewArray = order.split(","); //put crew-order values into crewArray
+		$("#deck").html(crewArray[1]); //display second crew value on onDeck timer
+		$(".station-one").html(crewArray[0]); //display first crew value on station1 timer
+		$(".station-two").html("");//make station2 crew blank
+		$(".station-three").html("");//make station3 crew blank		
 	}
 
 	//move crew numbers through timers
+	var y = -1;
 	function next()
-	{	if(crewArray[3+y] === undefined)
+	{	
+		if(crewArray[3+y] === undefined)
 		{
 			$("#deck").html("");
 		}
@@ -163,7 +163,7 @@ $(document).ready(function()
 		{
 			if(min>0 && sec>0)
 			{
-				this.startTimer = setInterval(function(){countdown();},50);
+				this.startTimer = setInterval(function(){countdown();},100);
 			}
 			this.running = true;
 			//console.log(timerID+" running: "+this.running);
@@ -264,25 +264,19 @@ $(document).ready(function()
 	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput");
 	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");
 	//var ghostTimer = new Timer(450);
-
-	// var timeWarning = function()
-	// {
-	// 	var timerNum = ['.timer-one', '.timer-two', '.timer-three'];
-	// 	$(timerNum).addClass("red-timer");
-	// 	console.log(timerNum)			
-	// }
 	
 	var doneFunc = function()
 	{
 		if(onDeck.done && station1.running === false)
 		{
 			station1.startCountdown();
-			station1.nextCrew(".station-one");
+			//next();
+			//station1.nextCrew(".station-one");
 		}
 		if(station1.done && station2.running === false)
 		{
 			station2.startCountdown();
-			station2.nextCrew(".station-two");
+			//station2.nextCrew(".station-two");
 			//station1.nextCrew(undefined,".station-one");
 		}
 		if(station2.done && station3.running === false)
@@ -298,6 +292,7 @@ $(document).ready(function()
 		station1.startCountdown();		
 	});
 
+	//reset all timers and set first crews to timers
 	$("#reset").click(function()
 	{
 		set();
@@ -308,41 +303,57 @@ $(document).ready(function()
 		//ghostTimer.reset();
 	});
 	
+	//move crews through timers when next button is clicked
 	$("#next").click(function()
 	{
 		next();
 	});
 
+	//pause station1 timer and onDeck timer when station1 pause is clicked	
 	$(".pauseOne").click(function()
 	{
 		onDeck.stopCountdown();
 		station1.stopCountdown();
 	});
+
+	//pause station2 timer when station2 pause is clicked
 	$(".pauseTwo").click(function()
 	{
 		station2.stopCountdown();
 	});
+
+	//pause station3 timer when station3 pause is clicked
 	$(".pauseThree").click(function()
 	{
 		station3.stopCountdown();
 	});
+
+	//add one minute to onDeck timer when add one minute button is clicked
 	$("#add-min-button").click(function()
 	{
 		onDeck.addMin();
 	});
+
+	//start onDeck timer and station1 timer when station1 play button is clicked	
 	$(".playOne").click(function()
 	{
 		onDeck.startCountdown();
 		station1.startCountdown();
 	});
+
+	//start station2 timer when station2 play button is clicked
 	$(".playTwo").click(function()
 	{
 		station2.startCountdown();
 	});
+
+	//start station3 timer when station3 play button is clicked
 	$(".playThree").click(function()
 	{
 		station3.startCountdown();
 	});
+
+
 	$("#submit-crew").click(function()
 	{
 		set();						
