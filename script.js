@@ -35,7 +35,7 @@ $(document).ready(function()
 	$("#timer-three").html(stationThreeTimer+":00");
 
 	//Display two timers or three timers depending on radio button selection	
-	$("input[name=stations]").change(function() //start function when a change to the number of stations radio value is committed by the user
+	$("input[name=stations]").change(function()
 	{     
 		if($("#2").is(":checked"))
 		{
@@ -143,49 +143,41 @@ $(document).ready(function()
 	}
 
 	//Constructor for timers
-	function Timer(minute,timerID,input)
+	function Timer(minute,timerID,input)//time in minutes, timer div, input from change timer form
 	{
 		var min = minute-1;
 		var sec = 60;
 		var self = this;
-		this.running = false;
-		//console.log(timerID+" running: "+this.running);		
-		this.done = false;
-		//console.log(timerID+" done: "+this.done);
+		this.running = false;				
+		this.done = false;		
 		this.startTimer;
 		this.input = input;		
 
 		this.startCountdown = function()
 		{
-			if(min>0 && sec>0)
+			if(min>0 && sec>0)//countdown by 1 second
 			{
 				this.startTimer = setInterval(function(){countdown();},100);
 			}
-			this.running = true;
-			//console.log(timerID+" running: "+this.running);
-			//self.done = false;
-			//console.log(timerID+" done: "+self.done);
+			this.running = true;			
 		};
 
-		this.stopCountdown = function()
+		this.stopCountdown = function()//pause countdown
 		{			
 			clearInterval(this.startTimer);
-			this.running = false;
-			//console.log(timerID+" running: "+this.running);			
+			this.running = false;						
 		};
 
-		function countdown() 
+		function countdown()// display countdown on timer
 		{			
 			sec--;
 			
 			if(min===0 && sec===0)
 			{				
 				self.stopCountdown();
-				self.done = true;
-				//console.log(timerID+" done: "+self.done);								
+				self.done = true;											
 				doneFunc();
 				self.reset();				
-				//$(timerID).html(minute+":00");
 			}								
 			else if(sec===0)
 			{			
@@ -198,28 +190,27 @@ $(document).ready(function()
 			}
 			else
 			{
-				$(timerID).html(min+":0"+sec);
+				$(timerID).html(min+":0"+sec);//add zero if seconds below 10
 			}
 			
-			if(min===0 && timerID != "#deck-timer")
+			if(min===0 && timerID != "#deck-timer")//make timer red when timer is at 1 min or less
 			{
 				$(timerID).addClass("red-timer");
 			}
-			else
+			else //remove red timer background
 			{
-				$(timerID).removeClass("red-timer")
+				$(timerID).removeClass("red-timer");
 			}
 
-			if(min===minute/2 && sec===1 && timerID != "#deck-timer")
+			if(min===minute/2 && sec===1 && timerID != "#deck-timer")// flash red at halfway point
 			{
-				$(timerID).addClass("fade-red")								
+				$(timerID).addClass("fade-red");								
 			}			
 		}
 
-		this.addMin = function()
+		this.addMin = function()// add one minute to timer
 		{
 			min++;
-
 			if(this.running===false)
 			{
 				$(timerID).html((min+1)+":00");	
@@ -233,6 +224,7 @@ $(document).ready(function()
 
 		this.reset = function()
 		{
+			$(timerID).removeClass("red-timer");
 			self.stopCountdown();			
 			min = minute-1;			
 			sec = 60;
@@ -240,6 +232,7 @@ $(document).ready(function()
 			newTime();			
 		};
 
+		//move all crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function(crewTimer)
 		{
@@ -266,6 +259,8 @@ $(document).ready(function()
 		if(onDeck.done && station1.running === false)
 		{
 			station1.startCountdown();
+			//onDeck.done = true;
+			//onDeck.startCountdown();
 			//next();
 			//station1.nextCrew(".station-one");
 		}
@@ -278,7 +273,11 @@ $(document).ready(function()
 		if(station2.done && station3.running === false)
 		{
 			station3.startCountdown();
-		}							
+		}
+		// if(onDeck.done)
+		// {
+		// 	onDeck.startCountdown();
+		// }							
 	}		
 
 	$("#go").click(function()
