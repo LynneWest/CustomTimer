@@ -34,14 +34,16 @@ $(document).ready(function()
 	$("#timer-two").html(stationTwoTimer+":00");
 	$("#timer-three").html(stationThreeTimer+":00");
 
-	//Display two timers or three timers depending on radio button selection	
+	//Display two timers or three timers depending on radio button selection
+	var threeHidden = true;	
 	$("input[name=stations]").change(function()
 	{     
 		if($("#2").is(":checked"))
 		{
 			$(".two-timers").removeClass("hidden");
 			$(".three-timers").addClass("hidden");
-			$("#three-time-box").addClass("hidden");        		
+			$("#three-time-box").addClass("hidden");
+			threeHidden = true;        		
 		}
 		else
 		{
@@ -51,7 +53,8 @@ $(document).ready(function()
 			onDeck.reset();
 			station1.reset();
 			station2.reset();
-			station3.reset();				
+			station3.reset();
+			threeHidden = false;				
 		}        
 	});
 		
@@ -151,21 +154,27 @@ $(document).ready(function()
 		this.running = false;				
 		this.done = false;		
 		this.startTimer;
-		this.input = input;		
+		this.input = input;
+		this.timerID = timerID; //this is for testing	
 
 		this.startCountdown = function()
-		{
+		{			
 			if(min>0 && sec>0)//countdown by 1 second
 			{
 				this.startTimer = setInterval(function(){countdown();},100);
 			}
-			this.running = true;			
+			this.running = true;
+			this.done = false;
+			console.log(this.timerID+" is running: "+this.running);
+			console.log(this.timerID+" is done: "+this.done);			
 		};
 
 		this.stopCountdown = function()//pause countdown
 		{			
 			clearInterval(this.startTimer);
-			this.running = false;						
+			this.running = false;
+			console.log(this.timerID+" is running: "+this.running);
+			console.log(this.timerID+" is done: "+this.done);						
 		};
 
 		function countdown()// display countdown on timer
@@ -174,10 +183,12 @@ $(document).ready(function()
 			
 			if(min===0 && sec===0)
 			{				
-				self.stopCountdown();
-				self.done = true;											
-				doneFunc();
-				self.reset();				
+				self.stopCountdown();				
+				self.done = true;
+				console.log(self.timerID+" is done: "+self.done)						
+				self.reset();
+				console.log("self reset is "+self.timerID);
+				doneFunc();				
 			}								
 			else if(sec===0)
 			{			
@@ -229,8 +240,9 @@ $(document).ready(function()
 			min = minute-1;			
 			sec = 60;
 			$(timerID).html(minute+":00");
-			newTime();			
-		};
+			newTime();
+			console.log(self.timerID+" is reset");						
+		};		
 
 		//move all crew numbers through stations
 		this.crew = 0;
@@ -251,38 +263,33 @@ $(document).ready(function()
 	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput");
 	var station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput");
 	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput");
-	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");
-	//var ghostTimer = new Timer(450);
+	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");	
 	
 	var doneFunc = function()
 	{
 		if(onDeck.done && station1.running === false)
 		{
-			station1.startCountdown();
-			//onDeck.done = true;
-			//onDeck.startCountdown();
+			station1.startCountdown();			
+			onDeck.startCountdown();
+			
 			//next();
 			//station1.nextCrew(".station-one");
 		}
 		if(station1.done && station2.running === false)
 		{
 			station2.startCountdown();
+			console.log("start 2 called from doneFunc")
 			//station2.nextCrew(".station-two");
 			//station1.nextCrew(undefined,".station-one");
 		}
-		if(station2.done && station3.running === false)
+		if(station2.done && station3.running === false && threeHidden === false)
 		{
 			station3.startCountdown();
-		}
-		// if(onDeck.done)
-		// {
-		// 	onDeck.startCountdown();
-		// }							
+		}									
 	}		
 
 	$("#go").click(function()
 	{
-		//ghostTimer.startCountdown();
 		onDeck.startCountdown();
 		station1.startCountdown();		
 	});
@@ -290,12 +297,11 @@ $(document).ready(function()
 	//reset all timers and set first crews to timers
 	$("#reset").click(function()
 	{
-		set();
+		set();//set crews
 		onDeck.reset();
 		station1.reset();
 		station2.reset();
-		station3.reset();
-		//ghostTimer.reset();
+		station3.reset();		
 	});
 	
 	//move crews through stations when next button is clicked
@@ -307,20 +313,25 @@ $(document).ready(function()
 	//pause station1 timer and onDeck timer when station1 pause is clicked	
 	$(".pauseOne").click(function()
 	{
+		console.log("pause 1");
 		onDeck.stopCountdown();
 		station1.stopCountdown();
+		
 	});
 
 	//pause station2 timer when station2 pause is clicked
 	$(".pauseTwo").click(function()
 	{
+		console.log("pause 2");
 		station2.stopCountdown();
+		
 	});
 
 	//pause station3 timer when station3 pause is clicked
 	$(".pauseThree").click(function()
 	{
 		station3.stopCountdown();
+		console.log("pause 3");
 	});
 
 	//add one minute to onDeck timer when add one minute button is clicked
@@ -332,6 +343,7 @@ $(document).ready(function()
 	//start onDeck timer and station1 timer when station1 play button is clicked	
 	$(".playOne").click(function()
 	{
+		console.log("play1");
 		onDeck.startCountdown();
 		station1.startCountdown();
 	});
@@ -339,12 +351,14 @@ $(document).ready(function()
 	//start station2 timer when station2 play button is clicked
 	$(".playTwo").click(function()
 	{
+		console.log("play2")
 		station2.startCountdown();
 	});
 
 	//start station3 timer when station3 play button is clicked
 	$(".playThree").click(function()
 	{
+		console.log(play3)
 		station3.startCountdown();
 	});
 
