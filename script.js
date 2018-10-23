@@ -69,8 +69,7 @@ $(document).ready(function()
 			//crewArray = [];
 			$("#crew-order").html(crewOrder); //display current crew order
 			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
-		}
-		console.log("crewArray = "+crewArray);			
+		}					
 	}
 	crewSet();
 	
@@ -109,7 +108,7 @@ $(document).ready(function()
 				self.stopCountdown();				
 				self.done = true;										
 				self.resetTime();				
-				doneFunc();				
+				timerDone();				
 			}								
 			else if(sec===0)
 			{			
@@ -216,7 +215,7 @@ $(document).ready(function()
 	}	
 	loadCrews();
 	
-	var doneFunc = function()
+	var timerDone = function()
 	{
 		if(onDeck.done && station1.running === false)
 		{
