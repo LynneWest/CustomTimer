@@ -1,10 +1,10 @@
 $(document).ready(function()
 {
 	//Change defualt times here
-	var deckTimer = 6;
-	var stationOneTimer = 4;
-	var stationTwoTimer = 4;
-	var stationThreeTimer = 4;
+	var deckTimer = 3;
+	var stationOneTimer = 2;
+	var stationTwoTimer = 2;
+	var stationThreeTimer = 2;
 
 	//Check current time and display on clock
 	function clock()
@@ -61,19 +61,24 @@ $(document).ready(function()
 	//set and display crew order
 	//set first crews to timers
 	//clear station two and three crew assignments
-	var crewArray = [];
+	var crewArray = [1,2,3,4,5];
 	var crewOrder;	
 	function crewSet()
-	{
-		crewArray = [];		
-		crewOrder = $("#order").val(); //put crew-order values from crew-order form into string
-		$("#crew-order").html(crewOrder); //display current crew order
-		crewArray = crewOrder.split(","); //put crew-order values into crewArray
+	{				
+		crewOrder = $("#order").val(); //put crew-order from crew-order form into string
+		if(crewOrder!="")
+		{
+			crewArray = [];			
+			$("#crew-order").html(crewOrder); //display current crew order
+			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
+		}
+		
 		$("#deck").html(crewArray[1]); //display second crew value on onDeck timer
 		$(".station-one").html(crewArray[0]); //display first crew value on station1 timer
 		$(".station-two").html("");//make station2 crew blank
 		$(".station-three").html("");//make station3 crew blank		
 	}
+	crewSet();
 
 	//move crew numbers through stations
 	var y = -1;
@@ -247,18 +252,17 @@ $(document).ready(function()
 	{
 		if(onDeck.done && station1.running === false)
 		{
-			station1.startCountdown();			
-			onDeck.startCountdown();
+			station1.nextCrew(".station-one");
+			station1.startCountdown();
+			onDeck.nextCrew("#deck")			
+			onDeck.startCountdown();			
 			
-			//next();
-			//station1.nextCrew(".station-one");
 		}
 		if(station1.done && station2.running === false)
 		{
-			station2.startCountdown();
-			console.log("start 2 called from doneFunc")
-			//station2.nextCrew(".station-two");
-			//station1.nextCrew(undefined,".station-one");
+			station2.startCountdown();			
+			station2.nextCrew(".station-two");
+			station1.nextCrew(undefined,".station-one");
 		}
 		if(station2.done && station3.running === false && threeHidden === false)
 		{
