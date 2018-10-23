@@ -120,7 +120,7 @@ $(document).ready(function()
 	}
 
 	//Constructor for timers
-	function Timer(minute,timerID,input,crewSpan)//time in minutes, timer div, input from change timer form
+	function Timer(minute,timerID,input,crewSpan)//time in minutes, timer div, input from change timer form, crew div
 	{
 		var min = minute-1;
 		var sec = 60;
@@ -244,10 +244,10 @@ $(document).ready(function()
 
 	}
 
-	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput");
-	var station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput");
-	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput");
-	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");	
+	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
+	var station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput", ".oneCrew");
+	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
+	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");	
 	
 	// var doneFunc = function()
 	// {
