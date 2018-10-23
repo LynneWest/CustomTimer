@@ -175,13 +175,20 @@ $(document).ready(function()
 			{
 				$(timerID).removeClass("red-timer");
 			}
-
-			if(min===minute/2 && sec===1 && timerID != "#deck-timer")// flash red at halfway point
+			
+			// flash red at halfway point
+			var halfMin = Math.floor(minute/2);//remove fraction from odd numbered minute
+			var halfCond = min===halfMin && timerID != "#deck-timer" && minute>2;		
+			if(minute%2===0 && sec===1 && halfCond)
 			{
-				$(timerID).addClass("fade-red");								
+				$(timerID).addClass("fade-red");										
+			}
+			else if(minute%2 != 0 && sec===30 && halfCond)
+			{
+				$(timerID).addClass("fade-red");				
 			}			
 		}
-		
+		 
 		this.newTime = function()
 		{
 			if($(this.input).val()!=="")
@@ -337,7 +344,6 @@ $(document).ready(function()
 		onDeck.newTime();
 		station1.newTime();
 		station2.newTime();
-		station3.newTime();
-		
+		station3.newTime();		
 	});
 });
