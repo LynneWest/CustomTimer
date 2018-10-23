@@ -253,7 +253,7 @@ $(document).ready(function()
 	{	
 		onDeck.nextCrew();
 		onDeck.nextCrew();
-		station1.nextCrew();
+		station1.nextCrew();		
 	}	
 	loadCrews();
 	
@@ -349,6 +349,10 @@ $(document).ready(function()
 	$("#submit-crew").click(function()
 	{
 		crewSet();
+		onDeck.reset();
+		station1.reset();
+		station2.reset();
+		station3.reset();
 		loadCrews();						
 	});
 	
