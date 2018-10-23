@@ -62,14 +62,13 @@ $(document).ready(function()
 	//set first crews to timers
 	//clear station two and three crew assignments
 	var crewArray = [];
-	var order;	
-	function set()
+	var crewOrder;	
+	function crewSet()
 	{
-		crewArray = [];
-		//y = 0-1;
-		order = $("#order").val(); //put crew-order values from crew-order form into string
-		$("#crew-order").html(order); //display current crew order
-		crewArray = order.split(","); //put crew-order values into crewArray
+		crewArray = [];		
+		crewOrder = $("#order").val(); //put crew-order values from crew-order form into string
+		$("#crew-order").html(crewOrder); //display current crew order
+		crewArray = crewOrder.split(","); //put crew-order values into crewArray
 		$("#deck").html(crewArray[1]); //display second crew value on onDeck timer
 		$(".station-one").html(crewArray[0]); //display first crew value on station1 timer
 		$(".station-two").html("");//make station2 crew blank
@@ -115,36 +114,6 @@ $(document).ready(function()
 		y++;
 	}
 
-	//Adjust timers to user input minutes
-	function newTime()
-	{
-		if($("#deckInput").val()!=="")
-		{
-			deckTimer = $("#deckInput").val();
-			onDeck.adjustMin();								
-		}
-		if($("#oneInput").val()!=="")
-		{
-			stationOneTimer = $("#oneInput").val();
-			station1.adjustMin();						
-		}
-		if($("#twoInput").val()!=="")
-		{
-			stationTwoTimer = $("#twoInput").val();
-			station2.adjustMin();						
-		}
-		if($("#threeInput").val()!=="")
-		{
-			stationThreeTimer = $("#threeInput").val();
-			station3.adjustMin();						
-		}
-
-		$("#deck-timer").html(deckTimer+":00");
-		$(".timer-one").html(stationOneTimer+":00");
-		$(".timer-two").html(stationTwoTimer+":00");
-		$(".timer-three").html(stationThreeTimer+":00");
-	}
-
 	//Constructor for timers
 	function Timer(minute,timerID,input)//time in minutes, timer div, input from change timer form
 	{
@@ -154,7 +123,7 @@ $(document).ready(function()
 		this.running = false;				
 		this.done = false;		
 		this.startTimer;
-		this.input = input;
+		this.input = input;//input from change timer form
 		this.timerID = timerID; //this is for testing	
 
 		this.startCountdown = function()
@@ -164,17 +133,13 @@ $(document).ready(function()
 				this.startTimer = setInterval(function(){countdown();},100);
 			}
 			this.running = true;
-			this.done = false;
-			console.log(this.timerID+" is running: "+this.running);
-			console.log(this.timerID+" is done: "+this.done);			
+			this.done = false;						
 		};
 
 		this.stopCountdown = function()//pause countdown
 		{			
 			clearInterval(this.startTimer);
-			this.running = false;
-			console.log(this.timerID+" is running: "+this.running);
-			console.log(this.timerID+" is done: "+this.done);						
+			this.running = false;									
 		};
 
 		function countdown()// display countdown on timer
@@ -184,10 +149,8 @@ $(document).ready(function()
 			if(min===0 && sec===0)
 			{				
 				self.stopCountdown();				
-				self.done = true;
-				console.log(self.timerID+" is done: "+self.done)						
-				self.reset();
-				console.log("self reset is "+self.timerID);
+				self.done = true;										
+				self.reset();				
 				doneFunc();				
 			}								
 			else if(sec===0)
@@ -218,6 +181,16 @@ $(document).ready(function()
 				$(timerID).addClass("fade-red");								
 			}			
 		}
+		
+		this.newTime = function()
+		{
+			if($(this.input).val()!=="")
+			{
+				minute = $(this.input).val();
+				this.adjustMin();
+				$(timerID).html(minute+":00");								
+			}						
+		}
 
 		this.addMin = function()// add one minute to timer
 		{
@@ -239,9 +212,7 @@ $(document).ready(function()
 			self.stopCountdown();			
 			min = minute-1;			
 			sec = 60;
-			$(timerID).html(minute+":00");
-			newTime();
-			console.log(self.timerID+" is reset");						
+			$(timerID).html(minute+":00");												
 		};		
 
 		//move all crew numbers through stations
@@ -297,7 +268,7 @@ $(document).ready(function()
 	//reset all timers and set first crews to timers
 	$("#reset").click(function()
 	{
-		set();//set crews
+		crewSet();
 		onDeck.reset();
 		station1.reset();
 		station2.reset();
@@ -313,25 +284,20 @@ $(document).ready(function()
 	//pause station1 timer and onDeck timer when station1 pause is clicked	
 	$(".pauseOne").click(function()
 	{
-		console.log("pause 1");
 		onDeck.stopCountdown();
-		station1.stopCountdown();
-		
+		station1.stopCountdown();		
 	});
 
 	//pause station2 timer when station2 pause is clicked
 	$(".pauseTwo").click(function()
-	{
-		console.log("pause 2");
-		station2.stopCountdown();
-		
+	{		
+		station2.stopCountdown();		
 	});
 
 	//pause station3 timer when station3 pause is clicked
 	$(".pauseThree").click(function()
 	{
-		station3.stopCountdown();
-		console.log("pause 3");
+		station3.stopCountdown();		
 	});
 
 	//add one minute to onDeck timer when add one minute button is clicked
@@ -342,36 +308,36 @@ $(document).ready(function()
 
 	//start onDeck timer and station1 timer when station1 play button is clicked	
 	$(".playOne").click(function()
-	{
-		console.log("play1");
+	{		
 		onDeck.startCountdown();
 		station1.startCountdown();
 	});
 
 	//start station2 timer when station2 play button is clicked
 	$(".playTwo").click(function()
-	{
-		console.log("play2")
+	{		
 		station2.startCountdown();
 	});
 
 	//start station3 timer when station3 play button is clicked
 	$(".playThree").click(function()
-	{
-		console.log(play3)
+	{		
 		station3.startCountdown();
 	});
 
 	//When submit button is pushed set and display crew order, set first crews to stations, clear station two and three crew assignments
 	$("#submit-crew").click(function()
 	{
-		set();						
+		crewSet();						
 	});
 	
 	//When adjust-timer-minutes submit button is pushed adjust timers to user input minutes
 	$("#submit-time").click(function()
-	{		
-		newTime();
-	});	
-
+	{			
+		onDeck.newTime();
+		station1.newTime();
+		station2.newTime();
+		station3.newTime();
+		
+	});
 });
