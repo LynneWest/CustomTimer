@@ -58,27 +58,22 @@ $(document).ready(function()
 		}        
 	});
 		
-	//set and display crew order
-	//set first crews to timers
-	//clear station two and three crew assignments
-	var crewArray = [1,2,3,4,5];
+	//set and display new crew order from form	
+	var crewArray = [1,2,3];
 	var crewOrder;	
 	function crewSet()
 	{				
-		crewOrder = $("#order").val(); //put crew-order from crew-order form into string
+		crewOrder = $("#order").val(); //put crew-order from crew-order form into string		
 		if(crewOrder!="")
-		{
-			crewArray = [];			
+		{						
+			//crewArray = [];
 			$("#crew-order").html(crewOrder); //display current crew order
 			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
 		}
-		
-		$(".deckCrew").html(crewArray[1]); //display second crew value on onDeck timer
-		$(".oneCrew").html(crewArray[0]); //display first crew value on station1 timer
-		$(".twoCrew").html("");//make station2 crew blank
-		$(".threeCrew").html("");//make station3 crew blank		
+		console.log("crewArray = "+crewArray);			
 	}
 	crewSet();
+	
 
 	//move all crew numbers through stations
 	var y = -1;
@@ -154,7 +149,7 @@ $(document).ready(function()
 			{				
 				self.stopCountdown();				
 				self.done = true;										
-				self.reset();				
+				self.resetTime();				
 				doneFunc();				
 			}								
 			else if(sec===0)
@@ -219,12 +214,18 @@ $(document).ready(function()
 
 		this.reset = function()
 		{
+			this.resetTime();
+			this.crew = 0;
+		};
+		
+		this.resetTime = function()//reset timers
+		{
 			$(timerID).removeClass("red-timer");
 			self.stopCountdown();			
 			min = minute-1;			
 			sec = 60;
-			$(timerID).html(minute+":00");												
-		};	
+			$(timerID).html(minute+":00");
+		}
 		
 		//move crew numbers through stations
 		this.crew = 0;
@@ -232,37 +233,29 @@ $(document).ready(function()
 		{
 			if(crewArray[this.crew]===undefined)
 			{
-				$(crewSpan).html("");				
+				$(crewSpan).html("");							
 				//this.stopCountdown();
 			}
 			else
 			{
-				$(crewSpan).html(crewArray[this.crew]);	
-				this.crew++;			
+				$(crewSpan).html(crewArray[this.crew]);					
+				this.crew++;				
 			}			
 		};
-
-		//move crew numbers through stations
-		// this.crew = 0;
-		// this.nextCrew = function(crewTimer)
-		// {
-		// 	if(crewArray[this.crew]===undefined)
-		// 	{
-		// 		$(crewTimer).html("");				
-		// 		//this.stopCountdown();
-		// 	}
-		// 	else
-		// 	{
-		// 		$(crewTimer).html(crewArray[this.crew]);				
-		// 	}			
-		// };
-
 	}
 
 	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
 	var station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput", ".oneCrew");
 	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");	
+	
+	var loadCrews = function()
+	{	
+		onDeck.nextCrew();
+		onDeck.nextCrew();
+		station1.nextCrew();
+	}	
+	loadCrews();
 	
 	var doneFunc = function()
 	{
@@ -276,8 +269,8 @@ $(document).ready(function()
 		if(station1.done && station2.running === false)
 		{
 			station2.startCountdown();			
-			station2.nextCrew();
-			station1.nextCrew();
+			//station2.nextCrew();
+			//station1.nextCrew();
 		}
 		if(station2.done && station3.running === false && threeHidden === false)
 		{
@@ -293,12 +286,13 @@ $(document).ready(function()
 
 	//reset all timers and set first crews to timers
 	$("#reset").click(function()
-	{
+	{		
 		crewSet();
 		onDeck.reset();
 		station1.reset();
 		station2.reset();
-		station3.reset();		
+		station3.reset();
+		loadCrews();				
 	});
 	
 	//move crews through stations when next button is clicked
@@ -354,7 +348,8 @@ $(document).ready(function()
 	//When submit button is pushed set and display crew order, set first crews to stations, clear station two and three crew assignments
 	$("#submit-crew").click(function()
 	{
-		crewSet();						
+		crewSet();
+		loadCrews();						
 	});
 	
 	//When adjust-timer-minutes submit button is pushed adjust timers to user input minutes
