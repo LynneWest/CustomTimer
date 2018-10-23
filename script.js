@@ -73,10 +73,10 @@ $(document).ready(function()
 			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
 		}
 		
-		$("#deck-crew").html(crewArray[1]); //display second crew value on onDeck timer
-		$(".station-one-crew").html(crewArray[0]); //display first crew value on station1 timer
-		$(".station-two-crew").html("");//make station2 crew blank
-		$(".station-three-crew").html("");//make station3 crew blank		
+		$(".deckCrew").html(crewArray[1]); //display second crew value on onDeck timer
+		$(".oneCrew").html(crewArray[0]); //display first crew value on station1 timer
+		$(".twoCrew").html("");//make station2 crew blank
+		$(".threeCrew").html("");//make station3 crew blank		
 	}
 	crewSet();
 
@@ -86,41 +86,41 @@ $(document).ready(function()
 	{	
 		if(crewArray[3+y] === undefined)
 		{
-			$("#deck-crew").html("");
+			$(".deckCrew").html("");
 		}
 		else
 		{
-			$("#deck-crew").html(crewArray[3+y]);
+			$(".deckCrew").html(crewArray[3+y]);
 		}
 		if(crewArray[2+y] === undefined)
 		{
-			$(".station-one-crew").html("");
+			$(".oneCrew").html("");
 		}
 		else
 		{
-			$(".station-one-crew").html(crewArray[2+y]);
+			$(".oneCrew").html(crewArray[2+y]);
 		}		
 		if(crewArray[1+y] === undefined)
 		{
-			$(".station-two-crew").html("");
+			$(".twoCrew").html("");
 		}
 		else
 		{
-			$(".station-two-crew").html(crewArray[1+y]);
+			$(".twoCrew").html(crewArray[1+y]);
 		}			
 		if(crewArray[0+y] === undefined)
 		{
-			$(".station-three-crew").html("");
+			$(".threeCrew").html("");
 		}	
 		else
 		{
-			$(".station-three-crew").html(crewArray[0+y]);
+			$(".threeCrew").html(crewArray[0+y]);
 		}				
 		y++;
 	}
 
 	//Constructor for timers
-	function Timer(minute,timerID,input)//time in minutes, timer div, input from change timer form
+	function Timer(minute,timerID,input,crewSpan)//time in minutes, timer div, input from change timer form
 	{
 		var min = minute-1;
 		var sec = 60;
@@ -253,17 +253,17 @@ $(document).ready(function()
 	// {
 	// 	if(onDeck.done && station1.running === false)
 	// 	{
-	// 		station1.nextCrew(".station-one-crew");
+	// 		station1.nextCrew(".oneCrew");
 	// 		station1.startCountdown();
-	// 		onDeck.nextCrew("#deck-crew")			
+	// 		onDeck.nextCrew(".deckCrew")			
 	// 		onDeck.startCountdown();			
 			
 	// 	}
 	// 	if(station1.done && station2.running === false)
 	// 	{
 	// 		station2.startCountdown();			
-	// 		station2.nextCrew(".station-two-crew");
-	// 		station1.nextCrew(undefined,".station-one-crew");
+	// 		station2.nextCrew(".twoCrew");
+	// 		station1.nextCrew(undefined,".oneCrew");
 	// 	}
 	// 	if(station2.done && station3.running === false && threeHidden === false)
 	// 	{
