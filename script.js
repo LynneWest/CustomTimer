@@ -73,48 +73,48 @@ $(document).ready(function()
 			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
 		}
 		
-		$("#deck").html(crewArray[1]); //display second crew value on onDeck timer
-		$(".station-one").html(crewArray[0]); //display first crew value on station1 timer
-		$(".station-two").html("");//make station2 crew blank
-		$(".station-three").html("");//make station3 crew blank		
+		$("#deck-crew").html(crewArray[1]); //display second crew value on onDeck timer
+		$(".station-one-crew").html(crewArray[0]); //display first crew value on station1 timer
+		$(".station-two-crew").html("");//make station2 crew blank
+		$(".station-three-crew").html("");//make station3 crew blank		
 	}
 	crewSet();
 
-	//move crew numbers through stations
+	//move all crew numbers through stations
 	var y = -1;
 	function next()
 	{	
 		if(crewArray[3+y] === undefined)
 		{
-			$("#deck").html("");
+			$("#deck-crew").html("");
 		}
 		else
 		{
-			$("#deck").html(crewArray[3+y]);
+			$("#deck-crew").html(crewArray[3+y]);
 		}
 		if(crewArray[2+y] === undefined)
 		{
-			$(".station-one").html("");
+			$(".station-one-crew").html("");
 		}
 		else
 		{
-			$(".station-one").html(crewArray[2+y]);
+			$(".station-one-crew").html(crewArray[2+y]);
 		}		
 		if(crewArray[1+y] === undefined)
 		{
-			$(".station-two").html("");
+			$(".station-two-crew").html("");
 		}
 		else
 		{
-			$(".station-two").html(crewArray[1+y]);
+			$(".station-two-crew").html(crewArray[1+y]);
 		}			
 		if(crewArray[0+y] === undefined)
 		{
-			$(".station-three").html("");
+			$(".station-three-crew").html("");
 		}	
 		else
 		{
-			$(".station-three").html(crewArray[0+y]);
+			$(".station-three-crew").html(crewArray[0+y]);
 		}				
 		y++;
 	}
@@ -227,20 +227,21 @@ $(document).ready(function()
 			$(timerID).html(minute+":00");												
 		};		
 
-		//move all crew numbers through stations
-		this.crew = 0;
-		this.nextCrew = function(crewTimer)
-		{
-			if(crewArray[this.crew]===undefined)
-			{
-				$(crewTimer).html("");
-			}
-			else
-			{
-				$(crewTimer).html(crewArray[this.crew]);
-				this.crew++;
-			}
-		};		
+		//move crew numbers through stations
+		// this.crew = 0;
+		// this.nextCrew = function(crewTimer)
+		// {
+		// 	if(crewArray[this.crew]===undefined)
+		// 	{
+		// 		$(crewTimer).html("");				
+		// 		//this.stopCountdown();
+		// 	}
+		// 	else
+		// 	{
+		// 		$(crewTimer).html(crewArray[this.crew]);				
+		// 	}			
+		// };
+
 	}
 
 	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput");
@@ -248,27 +249,27 @@ $(document).ready(function()
 	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput");
 	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput");	
 	
-	var doneFunc = function()
-	{
-		if(onDeck.done && station1.running === false)
-		{
-			station1.nextCrew(".station-one");
-			station1.startCountdown();
-			onDeck.nextCrew("#deck")			
-			onDeck.startCountdown();			
+	// var doneFunc = function()
+	// {
+	// 	if(onDeck.done && station1.running === false)
+	// 	{
+	// 		station1.nextCrew(".station-one-crew");
+	// 		station1.startCountdown();
+	// 		onDeck.nextCrew("#deck-crew")			
+	// 		onDeck.startCountdown();			
 			
-		}
-		if(station1.done && station2.running === false)
-		{
-			station2.startCountdown();			
-			station2.nextCrew(".station-two");
-			station1.nextCrew(undefined,".station-one");
-		}
-		if(station2.done && station3.running === false && threeHidden === false)
-		{
-			station3.startCountdown();
-		}									
-	}		
+	// 	}
+	// 	if(station1.done && station2.running === false)
+	// 	{
+	// 		station2.startCountdown();			
+	// 		station2.nextCrew(".station-two-crew");
+	// 		station1.nextCrew(undefined,".station-one-crew");
+	// 	}
+	// 	if(station2.done && station3.running === false && threeHidden === false)
+	// 	{
+	// 		station3.startCountdown();
+	// 	}									
+	// }		
 
 	$("#go").click(function()
 	{
