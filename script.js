@@ -1,10 +1,10 @@
 $(document).ready(function()
 {
 	//Change defualt times here
-	var deckTimer = 3;
-	var stationOneTimer = 2;
-	var stationTwoTimer = 2;
-	var stationThreeTimer = 2;
+	var deckTimer = 4;
+	var stationOneTimer = 3;
+	var stationTwoTimer = 3;
+	var stationThreeTimer = 3;
 
 	//Check current time and display on clock
 	function clock()
@@ -23,8 +23,8 @@ $(document).ready(function()
 		if(sec<10){
 			sec="0"+sec;
 		}
-		$("#clock-time").html(hour+":"+min+":"+sec);
-		var t = setTimeout(clock, 500);
+		$("#clock-time").html(hour+":"+min+":"+sec);		
+		setTimeout(clock, 500);
 	}
 	clock();
 	
@@ -59,7 +59,7 @@ $(document).ready(function()
 	});
 		
 	//set and display new crew order from form	
-	var crewArray = [1,2,3];
+	var crewArray = [1,2,3,4,5];
 	var crewOrder;	
 	function crewSet()
 	{				
@@ -79,6 +79,7 @@ $(document).ready(function()
 		var min = minute-1;
 		var sec = 60;
 		var self = this;
+		this.crewSpan = crewSpan;		
 		this.running = false;				
 		this.done = false;		
 		this.startTimer;			
@@ -140,7 +141,7 @@ $(document).ready(function()
 			{
 				$(timerID).addClass("fade-red");										
 			}
-			else if(minute%2 != 0 && sec===30 && halfCond)
+			else if(minute%2 != 0 && sec===31 && halfCond)
 			{
 				$(timerID).addClass("fade-red");				
 			}			
@@ -227,12 +228,17 @@ $(document).ready(function()
 		if(station1.done && station2.running === false)
 		{
 			station2.startCountdown();			
-			//station2.nextCrew();
-			//station1.nextCrew();
+			station2.nextCrew();			
+			$(station1['crewSpan']).html("");			
+		}
+		if(station2.done)
+		{
+			$(station2['crewSpan']).html("");
 		}
 		if(station2.done && station3.running === false && threeHidden === false)
 		{
 			station3.startCountdown();
+			
 		}									
 	}		
 
