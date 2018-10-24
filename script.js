@@ -58,8 +58,10 @@ $(document).ready(function()
 		}        
 	});
 		
-	//set and display new crew order from form	
-	var crewArray = [1,2,3,4,5];
+		
+	var crewArray = [1,2,3,4,5];//default crew order
+
+	//set and display new crew order from form
 	var crewOrder;	
 	function crewSet()
 	{				
@@ -127,7 +129,7 @@ $(document).ready(function()
 			
 			if(min===0 && timerID != "#deck-timer")//make timer red when timer is at 1 min or less
 			{
-				$(timerID).addClass("red-timer");
+				$(timerID).addClass("red-timer");				
 			}
 			else //remove red timer background
 			{
@@ -143,7 +145,7 @@ $(document).ready(function()
 			}
 			else if(minute%2 != 0 && sec===31 && halfCond)
 			{
-				$(timerID).addClass("fade-red");				
+				$(timerID).addClass("fade-red");								
 			}			
 		}
 		 
@@ -174,7 +176,7 @@ $(document).ready(function()
 		this.reset = function()//reset timer times and crew index
 		{
 			this.resetTime();
-			this.crew = 0;
+			this.crew = 0;			
 		};
 		
 		this.resetTime = function()//reset timer times
@@ -184,6 +186,7 @@ $(document).ready(function()
 			min = minute-1;			
 			sec = 60;
 			$(timerID).html(minute+":00");
+			$(timerID).removeClass("fade-red");
 		}
 		
 		//move crew numbers through stations
