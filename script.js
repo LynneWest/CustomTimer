@@ -50,14 +50,13 @@ $(document).ready(function()
 			$(".two-timers").addClass("hidden");
 			$(".three-timers").removeClass("hidden");
 			$("#three-time-box").removeClass("hidden");
-			onDeck.reset();
-			station1.reset();
-			station2.reset();
-			station3.reset();
+			onDeck.resetTime();
+			station1.resetTime();
+			station2.resetTime();
+			station3.resetTime();
 			threeHidden = false;				
 		}        
-	});
-		
+	});		
 		
 	var crewArray = [1,2,3,4,5];//default crew order
 
@@ -219,8 +218,8 @@ $(document).ready(function()
 	}	
 	loadCrews();
 	
-	var timerDone = function()
-	{
+	function timerDone()
+	{	
 		if(onDeck.done && station1.running === false)
 		{
 			station1.nextCrew();
@@ -240,8 +239,12 @@ $(document).ready(function()
 		}
 		if(station2.done && station3.running === false && threeHidden === false)
 		{
-			station3.startCountdown();
-			
+			station3.nextCrew();
+			station3.startCountdown();			
+		}
+		if(station3.done)
+		{
+			$(station3['crewSpan']).html("");
 		}									
 	}		
 
