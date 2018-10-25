@@ -58,7 +58,7 @@ $(document).ready(function()
 		}        
 	});		
 		
-	var crewArray = [1,2,3,4,5];//default crew order
+	var crewArray = [1,2,3];//default crew order
 
 	//set and display new crew order from form
 	var crewOrder;	
@@ -82,7 +82,7 @@ $(document).ready(function()
 		var self = this;
 		this.crewSpan = crewSpan;		
 		this.running = false;				
-		this.done = false;		
+		this.done = false;				
 		this.startTimer;			
 
 		this.startCountdown = function()
@@ -92,7 +92,7 @@ $(document).ready(function()
 				this.startTimer = setInterval(function(){countdown();},100);
 			}
 			this.running = true;
-			this.done = false;								
+			this.done = false;											
 		};
 
 		this.stopCountdown = function()//pause countdown
@@ -192,6 +192,7 @@ $(document).ready(function()
 		this.crew = 0;
 		this.nextCrew = function()
 		{
+			//console.log(timerID+" crewArray "+crewArray[this.crew]);
 			if(crewArray[this.crew]===undefined)
 			{
 				$(crewSpan).html("");							
@@ -217,17 +218,29 @@ $(document).ready(function()
 		station1.nextCrew();		
 	}	
 	loadCrews();
-	
+
 	function timerDone()
-	{	
-		if(onDeck.done && station1.running === false)
-		{
-			station1.nextCrew();
-			station1.startCountdown();
+	{		
+		if(onDeck.done && crewArray[onDeck.crew] != undefined && station1.done && crewArray[station1.crew] != undefined)
+		{			
 			onDeck.nextCrew();			
-			onDeck.startCountdown();			
+			onDeck.startCountdown();
+			station1.nextCrew();
+			station1.startCountdown();			
+		}		
+		if(onDeck.done && crewArray[onDeck.crew] === undefined && station1.done && crewArray[station1.crew] != undefined)
+		{			
+			onDeck.stopCountdown();
+			$(onDeck['crewSpan']).html("");
+			station1.nextCrew();
+			station1.startCountdown();									
 		}
-		if(station1.done && station2.running === false)
+		if(station1.done && crewArray[station1.crew] === undefined)
+		{
+			station1.stopCountdown();
+			$(station1['crewSpan']).html("");
+		}
+		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined)
 		{
 			station2.startCountdown();			
 			station2.nextCrew();			
@@ -237,7 +250,7 @@ $(document).ready(function()
 		{
 			$(station2['crewSpan']).html("");
 		}
-		if(station2.done && station3.running === false && threeHidden === false)
+		if(station2.done && station3.running === false && threeHidden === false && crewArray[station3.crew] != undefined)
 		{
 			station3.nextCrew();
 			station3.startCountdown();			
