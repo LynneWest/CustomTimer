@@ -194,7 +194,7 @@ $(document).ready(function()
 		this.crew = 0;
 		this.nextCrew = function()
 		{
-			//console.log(timerID+" crewArray "+crewArray[this.crew]);
+			console.log(timerID+" crewArray "+this.crew);
 			if(crewArray[this.crew]===undefined)
 			{
 				$(crewSpan).html("");				
@@ -247,12 +247,16 @@ $(document).ready(function()
 			station2.startCountdown();			
 			station2.nextCrew();			
 			$(station1['crewSpan']).html("");			
-		}	
+		}
+		else if(station2.done && station2.crew+1 != station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
+		{
+			station2.startCountdown();			
+			station2.nextCrew();	
+		}
 		if(station2.done)
 		{
 			$(station2['crewSpan']).html("");
-		}
-		
+		}		
 		if(station2.done && station3.running === false && threeHidden === false && crewArray[station3.crew] != undefined  && station3.pause === false)
 		{
 			station3.nextCrew();
