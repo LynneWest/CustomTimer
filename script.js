@@ -58,7 +58,7 @@ $(document).ready(function()
 		}        
 	});		
 		
-	var crewArray = [1,2,3];//default crew order
+	var crewArray = [1,2,3,4,5,6];//default crew order
 
 	//set and display new crew order from form
 	var crewOrder;	
@@ -220,7 +220,7 @@ $(document).ready(function()
 		station1.nextCrew();		
 	}	
 	loadCrews();
-
+	
 	function timerDone()
 	{		
 		if(onDeck.done && crewArray[onDeck.crew] != undefined && station1.done && crewArray[station1.crew] != undefined)
@@ -237,31 +237,39 @@ $(document).ready(function()
 			station1.nextCrew();
 			station1.startCountdown();									
 		}
-		if(station1.done /* && crewArray[station1.crew] === undefined */)
+		if(station1.done)
 		{
 			station1.stopCountdown();
 			$(station1['crewSpan']).html("");
 		}
 		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
 		{			
-			station2.startCountdown();			
-			station2.nextCrew();			
+			station2.nextCrew();
+			station2.startCountdown();						
 			$(station1['crewSpan']).html("");			
 		}
-		else if(station2.done && station2.crew+1 != station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
+		else if(station2.done && station2.crew+1 < station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
 		{
-			station2.startCountdown();			
-			station2.nextCrew();	
+			station2.nextCrew();
+			station2.startCountdown();				
 		}
 		if(station2.done)
 		{
 			$(station2['crewSpan']).html("");
 		}		
-		if(station2.done && station3.running === false && threeHidden === false && crewArray[station3.crew] != undefined  && station3.pause === false)
-		{
-			station3.nextCrew();
+		
+		if(threeHidden === false && station2.done && station3.running === false && station3.crew < station2.crew && station3.crew+1 < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
+		{			
 			station3.startCountdown();			
+			station3.nextCrew();			
+			$(station2['crewSpan']).html("");			
 		}
+		else if(threeHidden === false && station3.done && station3.crew+1 < station2.crew && station3.crew+1 < station1.crew && station3.pause === false && crewArray[station3.crew] != undefined)	
+		{
+			station3.startCountdown();			
+			station3.nextCrew();	
+		}				
+		
 		if(station3.done)
 		{
 			$(station3['crewSpan']).html("");
@@ -326,8 +334,10 @@ $(document).ready(function()
 	//start onDeck timer and station1 timer when station1 play button is clicked	
 	$(".playOne").click(function()
 	{		
-		onDeck.startCountdown();
 		station1.startCountdown();
+		if(crewArray[onDeck.crew] != undefined){
+			onDeck.startCountdown();
+		}		
 	});
 
 	//start station2 timer when station2 play button is clicked
@@ -362,26 +372,3 @@ $(document).ready(function()
 		station3.newTime();		
 	});
 });
-
-////!!!Save this for now
-	// else if(station2.done && station2.standby.length > 0)
-		// {			
-		// 	station2.crew = station2.standby.shift();
-		//  	//crewArray.shift();
-		//  	$(station2['crewSpan']).html(station2.crew);
-		//  	station2.startCountdown();
-		// }		
-		// if (station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause)
-		// {
-		// 	station2.standby.push(station1.crew);
-		// 	console.log("standby array "+station2.standby)						
-		// 	$(station1['crewSpan']).html("");
-		// }
-// if(station2.done && station2.standby.length > 0 && crewArray[station2.crew] != undefined)		
-		// {
-		// 	console.log("standby length "+station2.standby.length)
-		// 	station2.crew = station2.standby.shift();
-		// 	crewArray.shift();
-		// 	//$(station2['crewSpan']).html(station2.crew);
-		// 	station2.startCountdown();			
-		// }
