@@ -1,10 +1,10 @@
 $(document).ready(function()
 {
 	//Change defualt times here
-	var deckTimer = 4;
-	var stationOneTimer = 3;
-	var stationTwoTimer = 3;
-	var stationThreeTimer = 3;
+	var deckTimer = 2;
+	var stationOneTimer = 1;
+	var stationTwoTimer = 1;
+	var stationThreeTimer = 1;
 
 	//Check current time and display on clock
 	function clock()
@@ -66,11 +66,10 @@ $(document).ready(function()
 	{				
 		crewOrder = $("#order").val(); //put crew-order from crew-order form into string		
 		if(crewOrder!="")
-		{						
-			//crewArray = [];
+		{			
 			$("#crew-order").html(crewOrder); //display current crew order
 			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
-		}					
+		}							
 	}
 	crewSet();
 	
@@ -83,16 +82,19 @@ $(document).ready(function()
 		this.crewSpan = crewSpan;		
 		this.running = false;				
 		this.done = false;				
-		this.startTimer;			
+		this.startTimer;
+		this.pause = false;
+		//this.standby = [];			
 
 		this.startCountdown = function()
 		{			
-			if(min>0 && sec>0)//countdown by 1 second
-			{
+			//if(min>0 && sec>0)//countdown by 1 second
+			//{
 				this.startTimer = setInterval(function(){countdown();},100);
-			}
+			//}
 			this.running = true;
-			this.done = false;											
+			this.done = false;
+			this.pause = false;														
 		};
 
 		this.stopCountdown = function()//pause countdown
@@ -195,14 +197,14 @@ $(document).ready(function()
 			//console.log(timerID+" crewArray "+crewArray[this.crew]);
 			if(crewArray[this.crew]===undefined)
 			{
-				$(crewSpan).html("");							
-				//this.stopCountdown();
+				$(crewSpan).html("");				
 			}
 			else
 			{
 				$(crewSpan).html(crewArray[this.crew]);					
 				this.crew++;				
-			}			
+			}
+			return this.crew;			
 		};
 	}
 
@@ -226,7 +228,7 @@ $(document).ready(function()
 			onDeck.nextCrew();			
 			onDeck.startCountdown();
 			station1.nextCrew();
-			station1.startCountdown();			
+			station1.startCountdown();					
 		}		
 		if(onDeck.done && crewArray[onDeck.crew] === undefined && station1.done && crewArray[station1.crew] != undefined)
 		{			
@@ -235,22 +237,23 @@ $(document).ready(function()
 			station1.nextCrew();
 			station1.startCountdown();									
 		}
-		if(station1.done && crewArray[station1.crew] === undefined)
+		if(station1.done /* && crewArray[station1.crew] === undefined */)
 		{
 			station1.stopCountdown();
 			$(station1['crewSpan']).html("");
 		}
-		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined)
-		{
+		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
+		{			
 			station2.startCountdown();			
 			station2.nextCrew();			
 			$(station1['crewSpan']).html("");			
-		}
+		}	
 		if(station2.done)
 		{
 			$(station2['crewSpan']).html("");
 		}
-		if(station2.done && station3.running === false && threeHidden === false && crewArray[station3.crew] != undefined)
+		
+		if(station2.done && station3.running === false && threeHidden === false && crewArray[station3.crew] != undefined  && station3.pause === false)
 		{
 			station3.nextCrew();
 			station3.startCountdown();			
@@ -291,19 +294,23 @@ $(document).ready(function()
 	$(".pauseOne").click(function()
 	{
 		onDeck.stopCountdown();
-		station1.stopCountdown();		
+		station1.stopCountdown();
+		onDeck.pause = true;
+		station1.pause = true;		
 	});
 
 	//pause station2 timer when station2 pause is clicked
 	$(".pauseTwo").click(function()
 	{		
-		station2.stopCountdown();		
+		station2.stopCountdown();	
+		station2.pause = true;	
 	});
 
 	//pause station3 timer when station3 pause is clicked
 	$(".pauseThree").click(function()
 	{
-		station3.stopCountdown();		
+		station3.stopCountdown();
+		station3.pause = true;		
 	});
 
 	//add one minute to onDeck timer when add one minute button is clicked
@@ -322,7 +329,7 @@ $(document).ready(function()
 	//start station2 timer when station2 play button is clicked
 	$(".playTwo").click(function()
 	{		
-		station2.startCountdown();
+		station2.startCountdown();		
 	});
 
 	//start station3 timer when station3 play button is clicked
@@ -351,3 +358,26 @@ $(document).ready(function()
 		station3.newTime();		
 	});
 });
+
+////!!!Save this for now
+	// else if(station2.done && station2.standby.length > 0)
+		// {			
+		// 	station2.crew = station2.standby.shift();
+		//  	//crewArray.shift();
+		//  	$(station2['crewSpan']).html(station2.crew);
+		//  	station2.startCountdown();
+		// }		
+		// if (station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause)
+		// {
+		// 	station2.standby.push(station1.crew);
+		// 	console.log("standby array "+station2.standby)						
+		// 	$(station1['crewSpan']).html("");
+		// }
+// if(station2.done && station2.standby.length > 0 && crewArray[station2.crew] != undefined)		
+		// {
+		// 	console.log("standby length "+station2.standby.length)
+		// 	station2.crew = station2.standby.shift();
+		// 	crewArray.shift();
+		// 	//$(station2['crewSpan']).html(station2.crew);
+		// 	station2.startCountdown();			
+		// }
