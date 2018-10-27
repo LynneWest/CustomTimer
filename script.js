@@ -4,7 +4,7 @@ $(document).ready(function()
 	var deckTimer = 2;
 	var stationOneTimer = 1;
 	var stationTwoTimer = 1;
-	var stationThreeTimer = 1;
+	var stationThreeTimer = 1;	
 
 	//Check current time and display on clock
 	function clock()
@@ -83,33 +83,29 @@ $(document).ready(function()
 		this.running = false;				
 		this.done = false;				
 		this.startTimer;
-		this.pause = false;
-		//this.standby = [];			
+		this.pause = false;					
 
 		this.startCountdown = function()
 		{			
-			//if(min>0 && sec>0)//countdown by 1 second
-			//{
-				this.startTimer = setInterval(function(){countdown();},100);
-			//}
+			this.startTimer = setInterval(function(){countdown();},100);			
 			this.running = true;
 			this.done = false;
 			this.pause = false;														
 		};
-
+		
 		this.stopCountdown = function()//pause countdown
 		{			
 			clearInterval(this.startTimer);
 			this.running = false;									
 		};
-
+		
 		function countdown()//display countdown on timer
 		{			
 			sec--;
 			
 			if(min===0 && sec===0)
 			{				
-				self.stopCountdown();				
+				self.stopCountdown();												
 				self.done = true;										
 				self.resetTime();				
 				timerDone();				
@@ -193,8 +189,7 @@ $(document).ready(function()
 		//move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function()
-		{
-			console.log(timerID+" crewArray "+this.crew);
+		{			
 			if(crewArray[this.crew]===undefined)
 			{
 				$(crewSpan).html("");				
@@ -208,10 +203,11 @@ $(document).ready(function()
 		};
 	}
 
+	//time in minutes, timer div, input from change timer form, crew div
 	var onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
 	var station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput", ".oneCrew");
 	var station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
-	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");	
+	var station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
 	
 	var loadCrews = function()
 	{	
@@ -238,9 +234,8 @@ $(document).ready(function()
 			station1.startCountdown();									
 		}
 		if(station1.done)
-		{
-			station1.stopCountdown();
-			$(station1['crewSpan']).html("");
+		{			
+			$(station1['crewSpan']).html("");			
 		}
 		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
 		{			
@@ -257,7 +252,6 @@ $(document).ready(function()
 		{
 			$(station2['crewSpan']).html("");
 		}		
-		
 		if(threeHidden === false && station2.done && station3.running === false && station3.crew < station2.crew && station3.crew+1 < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
 		{			
 			station3.startCountdown();			

@@ -58,7 +58,7 @@ body {
 .fade-red {
 	animation-duration: 3s;
 	animation-name: fadeRed;
-  }
+}
   
   @keyframes fadeRed {
 	from {
