@@ -284,7 +284,9 @@ $(document).ready(function()
 		station1.reset();
 		station2.reset();
 		station3.reset();
-		loadCrews();				
+		loadCrews();
+		$(station2['crewSpan']).html("");
+		$(station3['crewSpan']).html("");				
 	});
 	
 	//move all crews through stations when next button is clicked
@@ -328,22 +330,32 @@ $(document).ready(function()
 	//start onDeck timer and station1 timer when station1 play button is clicked	
 	$(".playOne").click(function()
 	{		
-		station1.startCountdown();
-		if(crewArray[onDeck.crew] != undefined){
-			onDeck.startCountdown();
-		}		
-	});
+		if (station1.running === false && $(station1['crewSpan']).html() != "")
+		{
+			station1.startCountdown();
+			if(crewArray[onDeck.crew] != undefined && onDeck.running === false){
+				onDeck.startCountdown();
+			}
+		}				
+	});	
 
 	//start station2 timer when station2 play button is clicked
 	$(".playTwo").click(function()
 	{		
-		station2.startCountdown();		
+		if(station2.running === false && $(station2['crewSpan']).html() != "")
+		{
+			console.log($(station2['crewSpan']).html());
+			station2.startCountdown();
+		}				
 	});
 
 	//start station3 timer when station3 play button is clicked
 	$(".playThree").click(function()
 	{		
-		station3.startCountdown();
+		if(station3.running === false && $(station3['crewSpan']).html() != "")
+		{
+			station3.startCountdown();
+		}
 	});
 
 	//When submit button is pushed set and display crew order, set first crews to stations
