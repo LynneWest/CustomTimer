@@ -224,35 +224,59 @@ $(document).ready(function()
 	
 	function timerDone()
 	{		
-		if(onDeck.done && crewArray[onDeck.crew] != undefined && station1.done && crewArray[station1.crew] != undefined)
-		{			
-			onDeck.nextCrew();			
-			onDeck.startCountdown();
+		if(onDeck.done && station1.done && crewArray[station1.crew] != undefined)
+		{
 			station1.nextCrew();
-			station1.startCountdown();					
-		}		
-		if(onDeck.done && crewArray[onDeck.crew] === undefined && station1.done && crewArray[station1.crew] != undefined)
-		{			
-			onDeck.stopCountdown();
-			$(onDeck['crewSpan']).html("");
-			station1.nextCrew();
-			station1.startCountdown();									
+			station1.startCountdown();
+			if(crewArray[onDeck.crew] != undefined){
+				onDeck.nextCrew();			
+				onDeck.startCountdown();				
+			}
+			else{
+				onDeck.stopCountdown();
+				$(onDeck['crewSpan']).html("");				
+			}
 		}
+		// if(onDeck.done && crewArray[onDeck.crew] != undefined && station1.done && crewArray[station1.crew] != undefined)
+		// {			
+		// 	onDeck.nextCrew();			
+		// 	onDeck.startCountdown();
+		// 	station1.nextCrew();
+		// 	station1.startCountdown();					
+		// }		
+		// if(onDeck.done && crewArray[onDeck.crew] === undefined && station1.done && crewArray[station1.crew] != undefined)
+		// {			
+		// 	onDeck.stopCountdown();
+		// 	$(onDeck['crewSpan']).html("");
+		// 	station1.nextCrew();
+		// 	station1.startCountdown();									
+		// }
 		if(station1.done)
 		{			
-			$(station1['crewSpan']).html("");			
+			$(station1['crewSpan']).html("");
+			
+			if(station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false){
+				station2.nextCrew();
+				station2.startCountdown();						
+				$(station1['crewSpan']).html("");
+			}
+			else if(station2.done && station2.crew+1 < station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
+			{
+				station2.nextCrew();
+				station2.startCountdown();				
+			}			
 		}
-		if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
-		{			
-			station2.nextCrew();
-			station2.startCountdown();						
-			$(station1['crewSpan']).html("");			
-		}
-		else if(station2.done && station2.crew+1 < station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
-		{
-			station2.nextCrew();
-			station2.startCountdown();				
-		}
+		// if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
+		// {			
+		// 	station2.nextCrew();
+		// 	station2.startCountdown();						
+		// 	$(station1['crewSpan']).html("");			
+		// }
+		// else if(station2.done && station2.crew+1 < station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
+		// {
+		// 	station2.nextCrew();
+		// 	station2.startCountdown();				
+		// }
 		if(station2.done)
 		{
 			$(station2['crewSpan']).html("");
