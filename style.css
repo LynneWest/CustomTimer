@@ -81,8 +81,11 @@ button:focus, button:active, .btn:focus, .btn:active {
 	margin-bottom: 0;
 }
 .crew {
-	font-size: 50px;
+	font-size: 45px;
 	font-weight: bold;
+}
+.crew-div h1 {
+	height: 50px;
 }
 .timers .btn {
 	margin: 5px;

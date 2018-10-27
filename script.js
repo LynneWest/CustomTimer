@@ -1,10 +1,10 @@
 $(document).ready(function()
 {
 	//Change defualt times here
-	var deckTimer = 2;
-	var stationOneTimer = 1;
-	var stationTwoTimer = 1;
-	var stationThreeTimer = 1;	
+	var deckTimer = 3;
+	var stationOneTimer = 2;
+	var stationTwoTimer = 2;
+	var stationThreeTimer = 2;	
 
 	//Check current time and display on clock
 	function clock()
@@ -58,18 +58,23 @@ $(document).ready(function()
 		}        
 	});		
 		
-	var crewArray = [1,2,3,4,5,6];//default crew order
+	var crewArray;
 
 	//set and display new crew order from form
 	var crewOrder;	
 	function crewSet()
 	{				
+		crewArray = [1,2,3,4,5,6];//default crew order
 		crewOrder = $("#order").val(); //put crew-order from crew-order form into string		
 		if(crewOrder!="")
 		{			
-			$("#crew-order").html(crewOrder); //display current crew order
-			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
-		}							
+			$("#crew-order").html(crewOrder); //display current crew order			
+			crewArray = crewOrder.split(","); //put crew-order values into crewArray				
+		}
+		for (i=0; i < crewArray.length; i++){
+			crewArray[i]="Crew "+crewArray[i];
+		}		
+		console.log(crewArray);							
 	}
 	crewSet();
 	
@@ -343,8 +348,7 @@ $(document).ready(function()
 	$(".playTwo").click(function()
 	{		
 		if(station2.running === false && $(station2['crewSpan']).html() != "")
-		{
-			console.log($(station2['crewSpan']).html());
+		{			
 			station2.startCountdown();
 		}				
 	});
