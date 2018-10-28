@@ -57,24 +57,22 @@ $(document).ready(function()
 			threeHidden = false;				
 		}        
 	});		
-		
-	var crewArray;
-
-	//set and display new crew order from form
+	
+	var crewArray;	
 	var crewOrder;	
-	function crewSet()
+	function crewSet()//set and display new crew order from form
 	{				
 		crewArray = [1,2,3,4,5,6];//default crew order
 		crewOrder = $("#order").val(); //put crew-order from crew-order form into string		
 		if(crewOrder!="")
 		{			
 			$("#crew-order").html(crewOrder); //display current crew order			
-			crewArray = crewOrder.split(","); //put crew-order values into crewArray				
+			crewArray = crewOrder.split(","); //put crew-order values into crewArray	
 		}
-		for (i=0; i < crewArray.length; i++){
+		for (i=0; i < crewArray.length; i++)
+		{
 			crewArray[i]="Crew "+crewArray[i];
-		}		
-		console.log(crewArray);							
+		}								
 	}
 	crewSet();
 	
@@ -101,7 +99,7 @@ $(document).ready(function()
 		this.stopCountdown = function()//pause countdown
 		{			
 			clearInterval(this.startTimer);
-			this.running = false;									
+			this.running = false;												
 		};
 		
 		function countdown()//display countdown on timer
@@ -110,10 +108,11 @@ $(document).ready(function()
 			
 			if(min===0 && sec===0)
 			{				
+				$(self.crewSpan).html("");
 				self.stopCountdown();												
 				self.done = true;										
 				self.resetTime();				
-				timerDone();				
+				timerDone();								
 			}								
 			else if(sec===0)
 			{			
@@ -150,7 +149,10 @@ $(document).ready(function()
 				$(timerID).addClass("fade-red");								
 			}			
 		}
-		 
+		
+		
+
+		//!!! remove adjust min func, ads functionality to this func
 		this.newTime = function()
 		{
 			if($(input).val()!=="")
@@ -189,19 +191,22 @@ $(document).ready(function()
 			sec = 60;
 			$(timerID).html(minute+":00");
 			$(timerID).removeClass("fade-red");
+			//$(self.crewSpan).html("");
 		}
 		
+
+		//!!! Do I still need this if crew undefined or does timer done take care of this?
 		//move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function()
 		{			
 			if(crewArray[this.crew]===undefined)
 			{
-				$(crewSpan).html("");				
+				//$(crewSpan).html("");				
 			}
 			else
 			{
-				$(crewSpan).html(crewArray[this.crew]);					
+				$(crewSpan).html(crewArray[this.crew]);									
 				this.crew++;				
 			}
 			return this.crew;			
@@ -224,19 +229,63 @@ $(document).ready(function()
 	
 	function timerDone()
 	{		
-		if(onDeck.done && station1.done && crewArray[station1.crew] != undefined)
+		if(onDeck.done && crewArray[onDeck.crew] != undefined)
+		{		
+			onDeck.nextCrew();						
+			onDeck.startCountdown();			
+		}		
+		if(station1.done && crewArray[station1.crew] != undefined && station1.crew+1 < onDeck.crew)
 		{
 			station1.nextCrew();
-			station1.startCountdown();
-			if(crewArray[onDeck.crew] != undefined){
-				onDeck.nextCrew();			
-				onDeck.startCountdown();				
-			}
-			else{
-				onDeck.stopCountdown();
-				$(onDeck['crewSpan']).html("");				
-			}
+			station1.startCountdown();			
+		}		
+		if((station1.done && station2.crew < station1.crew || station2.done && station2.crew+1 < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
+		{			
+			station2.nextCrew();
+			station2.startCountdown();			
+		}		
+		if(station2.done || station3.done && threeHidden === false && station3.running === false && station3.crew < station2.crew && station3.crew < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
+		{
+			station3.nextCrew();
+			station3.startCountdown();
 		}
+		
+		// if(onDeck.done && station1.done && crewArray[station1.crew] != undefined)
+		// {
+		// 	$(onDeck['crewSpan']).html("");
+		// 	station1.nextCrew();
+		// 	station1.startCountdown();
+		// 	if(crewArray[onDeck.crew] != undefined)
+		// 	{
+		// 		onDeck.nextCrew();			
+		// 		onDeck.startCountdown();				
+		// 	}			
+		// }
+		// if(station1.done)
+		// {			
+		// 	$(station1['crewSpan']).html("");			
+		// 	if(station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false && station2.crew < station1.crew)
+		// 	{
+		// 		station2.nextCrew();
+		// 		station2.startCountdown();				
+		// 	}						
+		// }
+		// if(station2.done)
+		// {
+		// 	$(station2['crewSpan']).html("");
+		// 	if(threeHidden === false && station3.running === false && station3.crew < station2.crew && station3.crew < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
+		// 	{
+		// 		station3.nextCrew();
+		// 		station3.startCountdown();				
+		// 	}			
+		// }
+		// if(station3.done)
+		// {
+		// 	$(station3['crewSpan']).html("");
+		// }
+
+
+
 		// if(onDeck.done && crewArray[onDeck.crew] != undefined && station1.done && crewArray[station1.crew] != undefined)
 		// {			
 		// 	onDeck.nextCrew();			
@@ -251,21 +300,7 @@ $(document).ready(function()
 		// 	station1.nextCrew();
 		// 	station1.startCountdown();									
 		// }
-		if(station1.done)
-		{			
-			$(station1['crewSpan']).html("");
-			
-			if(station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false){
-				station2.nextCrew();
-				station2.startCountdown();						
-				$(station1['crewSpan']).html("");
-			}
-			else if(station2.done && station2.crew+1 < station1.crew && station2.pause === false && crewArray[station2.crew] != undefined)	
-			{
-				station2.nextCrew();
-				station2.startCountdown();				
-			}			
-		}
+	
 		// if(station1.done && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
 		// {			
 		// 	station2.nextCrew();
@@ -277,28 +312,25 @@ $(document).ready(function()
 		// 	station2.nextCrew();
 		// 	station2.startCountdown();				
 		// }
-		if(station2.done)
-		{
-			$(station2['crewSpan']).html("");
-		}		
-		if(threeHidden === false && station2.done && station3.running === false && station3.crew < station2.crew && station3.crew+1 < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
-		{			
-			station3.startCountdown();			
-			station3.nextCrew();			
-			$(station2['crewSpan']).html("");			
-		}
-		else if(threeHidden === false && station3.done && station3.crew+1 < station2.crew && station3.crew+1 < station1.crew && station3.pause === false && crewArray[station3.crew] != undefined)	
-		{
-			station3.startCountdown();			
-			station3.nextCrew();	
-		}				
 		
-		if(station3.done)
-		{
-			$(station3['crewSpan']).html("");
-		}									
-	}		
 
+		// if(station2.done)
+		// {
+		// 	$(station2['crewSpan']).html("");
+		// }		
+		// if(threeHidden === false && station2.done && station3.running === false && station3.crew < station2.crew && station3.crew+1 < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
+		// {			
+		// 	station3.startCountdown();			
+		// 	station3.nextCrew();			
+		// 	$(station2['crewSpan']).html("");			
+		// }
+		// else if(threeHidden === false && station3.done && station3.crew+1 < station2.crew && station3.crew+1 < station1.crew && station3.pause === false && crewArray[station3.crew] != undefined)	
+		// {
+		// 	station3.startCountdown();			
+		// 	station3.nextCrew();	
+		// }											
+	}		
+	//!!! MAKE go only pushable once
 	$("#go").click(function()
 	{
 		onDeck.startCountdown();
