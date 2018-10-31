@@ -193,16 +193,14 @@ $(document).ready(function()
 			$(timerID).removeClass("fade-red");
 			//$(self.crewSpan).html("");
 		}
-		
 
-		//!!! Do I still need this if crew undefined or does timer done take care of this?
 		//move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function()
 		{			
 			if(crewArray[this.crew]===undefined)
 			{
-				//$(crewSpan).html("");				
+				$(crewSpan).html("");				
 			}
 			else
 			{
@@ -228,27 +226,27 @@ $(document).ready(function()
 	loadCrews();
 	
 	function timerDone()
-	{		
+	{			
 		if(onDeck.done && crewArray[onDeck.crew] != undefined)
 		{		
 			onDeck.nextCrew();						
 			onDeck.startCountdown();			
 		}		
-		if(station1.done && crewArray[station1.crew] != undefined && station1.crew+1 < onDeck.crew)
-		{
+		if(station1.done && crewArray[station1.crew] != undefined && (station1.crew+1 < onDeck.crew || onDeck.done))
+		{			
 			station1.nextCrew();
 			station1.startCountdown();			
-		}		
-		if((station1.done && station2.crew < station1.crew || station2.done && station2.crew+1 < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
+		}				
+		if((station2.done && station2.crew+1 < station1.crew || station1.done && station2.crew < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false)
 		{			
 			station2.nextCrew();
 			station2.startCountdown();			
 		}		
-		if(station2.done || station3.done && threeHidden === false && station3.running === false && station3.crew < station2.crew && station3.crew < station1.crew  && crewArray[station3.crew] != undefined && station3.pause === false)
+		if((station3.done && station3.crew+1 < station2.crew || station2.done && station3.crew < station2.crew) && threeHidden === false && station3.running === false && crewArray[station3.crew] != undefined && station3.pause === false)
 		{
 			station3.nextCrew();
 			station3.startCountdown();
-		}
+		}		
 		
 		// if(onDeck.done && station1.done && crewArray[station1.crew] != undefined)
 		// {
@@ -329,8 +327,11 @@ $(document).ready(function()
 		// 	station3.startCountdown();			
 		// 	station3.nextCrew();	
 		// }											
-	}		
-	//!!! MAKE go only pushable once
+	}
+	
+	
+
+	//!!! MAKE go only pushable once & start all timers with crews
 	$("#go").click(function()
 	{
 		onDeck.startCountdown();
@@ -356,7 +357,10 @@ $(document).ready(function()
 		onDeck.nextCrew();
 		station1.nextCrew();
 		station2.nextCrew();
-		station3.nextCrew();
+		if(station2.crew > 1)
+		{
+			station3.nextCrew();
+		}				
 	});
 
 	//pause station1 timer and onDeck timer when station1 pause is clicked	
