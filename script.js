@@ -145,13 +145,12 @@ $(document).ready(function()
 		}//countdown() end		
 		
 
-		//!!! remove adjust min func, ads functionality to this func
+		//adjust default time to time from input form
 		this.newTime = function()
 		{
-			if($(input).val()!=="")
-			{
+			if($(input).val()!==""){
 				minute = $(input).val();
-				this.adjustMin();
+				min = $(input).val()-1;				
 				$(timerID).html(minute+":00");								
 			}						
 		}
@@ -163,12 +162,7 @@ $(document).ready(function()
 			{
 				$(timerID).html((min+1)+":00");	
 			}			
-		};
-
-		this.adjustMin = function()
-		{
-			min = $(input).val()-1;			
-		};
+		};		
 
 		this.reset = function()//reset timer times and crew index
 		{
