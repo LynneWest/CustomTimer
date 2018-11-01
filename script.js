@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
 	//Change defualt times here
-	const deckTimer = 3;
-	const stationOneTimer = 2;
-	const stationTwoTimer = 2;
-	const stationThreeTimer = 2;	
+	const deckTimer = 12;
+	const stationOneTimer = 10;
+	const stationTwoTimer = 10;
+	const stationThreeTimer = 10;	
 
 	//Check current time and display on clock using recursive setTimeout()
 	function clock() {
@@ -101,7 +101,7 @@ $(document).ready(function() {
 		this.pause = false;					
 
 		this.startCountdown = function() {			
-			this.startTimer = setInterval(function(){countdown();},100);		
+			this.startTimer = setInterval(function(){countdown();},1000);		
 			this.running = true;
 			this.done = false;
 			this.pause = false;													
