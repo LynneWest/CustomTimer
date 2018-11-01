@@ -44,6 +44,7 @@ $(document).ready(function()
 			onDeck.resetTime();
 			station1.resetTime();
 			station2.resetTime();
+			station3.resetTime();
 			threeHidden = true;        		
 		}
 		else{
@@ -236,27 +237,22 @@ $(document).ready(function()
 			station3.nextCrew();
 			station3.startCountdown();
 		}													
-	}
-	
-	
+	}	
 
-	//!!! MAKE go only pushable once & start all timers with crews
+	//when go pushed start all timers with crews if no timers are running
 	$("#go").click(function()
 	{
-		//if()
-		//{
+		if(onDeck.running===false && station1.running===false && station2.running===false && station3.running===false){
 			console.log("go")
 			onDeck.startCountdown();
 			station1.startCountdown();
-			if(station2.crew>0)
-			{
+			if(station2.crew>0){
 				station2.startCountdown();
 			}
-			if(station3.crew>0)
-			{
+			if(station3.crew>0){
 				station3.startCountdown();
 			}
-		//}			
+		}			
 	});
 
 	//reset all timers and set first crews to timers
