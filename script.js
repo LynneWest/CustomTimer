@@ -57,22 +57,36 @@ $(document).ready(function() {
 		}        
 	});		
 	
+	//store objects locally
+	Storage.prototype.setObj = function(key, obj) {
+		return this.setItem(key, JSON.stringify(obj))
+	}
+	Storage.prototype.getObj = function(key) {
+		return JSON.parse(this.getItem(key))
+	}
+
 	//set and display crew order
 	let crewArray;	
 	let crewOrder;	
-	function crewSet() {				
-		crewArray = [1,2,3,4,5,6];//default crew order
-		crewOrder = $("#order").val(); //put crewOrder from crewOrder form into string		
+	function crewSet() {								
+		crewOrder = $("#order").val(); //put crewOrder from form into string	
 		if(crewOrder != "") {			
-			$("#crew-order").html(crewOrder);//display crew order from form	
-			crewArray = crewOrder.split(",");//put crew-order values into crewArray	
+			$("#crew-order").html(crewOrder);//display crew order from form		
+			crewArray = crewOrder.split(",");//put crew-order values into crewArray
+			localStorage.setObj("crews", crewArray);//store CrewArray locally	
 		}
+		else if(localStorage.getObj("crews") != null) {
+			crewArray = localStorage.getObj("crews");//get locally stored CrewArray			
+		}
+		else {
+			crewArray = [1,2,3,4,5,6];
+		}		
 		//add "crew " in front of each array element
 		for (let i=0; i < crewArray.length; i++) {		
 			crewArray[i] = "Crew "+crewArray[i];
 		}								
 	}
-	crewSet();
+	crewSet();	
 	
 	//Constructor for timers
 	//(time in minutes, timer div, input from #adjust-timers form, .crew-div)
@@ -305,11 +319,11 @@ $(document).ready(function() {
 
 	//When submit crew is pushed set and display crew order, set first crews to stations
 	$("#submit-crew").click(function() {
-		crewSet();
+		crewSet();		
 		onDeck.reset();
 		station1.reset();
 		station2.reset();
-		station3.reset();
+		station3.reset();		
 		loadCrews();						
 	});
 	
