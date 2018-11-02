@@ -17,8 +17,8 @@ body {
 .top-crewOrder h3 {
 	margin-top: 10px;
 }
-#go {	
-	font-size: 60px;
+#go {
+	font-size: 40px;	
 	width: 75%;
 	margin: 40px auto 20px;			
 }
@@ -49,12 +49,14 @@ button:focus, button:active, .btn:focus, .btn:active {
 	height: 220px;
 	width: 220px;
 	border-radius: 50%;
+	border: 3px solid black;
 	font-weight: bold;
+	margin-top: 20px;
 }
 #clock p {
 	font-size: 50px;
 	margin-top: 20px;
-	padding-top: 75px;
+	padding-top: 55px;
 	color: black;	
 }
 .timers-row {
@@ -73,6 +75,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 	font-size: 120px;
 	width: 100%;
 	text-align: center;
+}
+.three-timers .timer {
+	font-size:100px;
 }
 .red-timer {
 	background-color: #c9302c;
@@ -137,4 +142,13 @@ label {
 }
 .top-btn {
 	margin: 15px 0;
+}
+
+@media(max-width: 992px) {	
+	.timer {
+		font-size: 100px;
+	}
+	.three-timers .timer {
+		font-size: 80px;
+	}
 }
