@@ -196,8 +196,7 @@ $(document).ready(function() {
 		this.crew = 0;
 		this.nextCrew = function() {			
 			if(crewArray[this.crew] === undefined) {
-				$(crewSpan).html("");
-				$(".deck-h1").addClass("hidden");				
+				$(crewSpan).html("");								
 			}
 			else {
 				$(crewSpan).html(crewArray[this.crew]);							
