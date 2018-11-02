@@ -158,6 +158,9 @@ input {
 	font-weight: bold;
 	margin-bottom: 10px;
 }
+#setup h4 {
+	font-size: 20px;
+}
 label {
 	font-size: medium;
 	font-weight: 400;
@@ -168,6 +171,9 @@ label {
 }
 .crew-order {
 	font-size: 25px;	
+}
+.crew-setup .crew-order {
+	margin-bottom: 30px;
 }
 .input-minutes{
 	width: 80px !important;	
@@ -184,6 +190,7 @@ label {
 	margin: 15px 0;
 }
 
+/* ----- @media ----- */
 @media(max-width: 992px) {	
 	.timer {
 		font-size: 100px;
