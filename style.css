@@ -8,15 +8,8 @@ body {
 .timers h1 {
 	color: black;
 }
-/* .top-crewOrder {
-	background-color: rgba(255, 255, 255, .6);
-	border-radius: 6px;
-	border: 2px solid black;
-	margin-top: 15px;	
-} */
-.top-crewOrder h3 {
-	margin-top: 10px;
-}
+
+/* Buttons */
 #go {
 	font-size: 50px;	
 	width: 75%;
@@ -38,38 +31,11 @@ a, a:hover, a:focus {
 button:focus, button:active, .btn:focus, .btn:active {
 	outline: none !important;
 }
-.on-deck .timer {
-	font-size: 90px;
-	line-height: 1.2;		
+.timers .btn {
+	margin: 5px;
 }
-#clock {
-	background-color: rgba(255, 255, 255, .6);
-	height: 220px;
-	width: 220px;
-	border-radius: 50%;
-	border: 3px solid black;
-	font-weight: bold;
-	margin-top: 20px;
-}
-#clock p {
-	font-size: 50px;
-	margin-top: 20px;
-	padding-top: 55px;
-	color: black;	
-}
-.timers-row {
-	background-color:  rgba(255, 255, 255, .5);
-	margin-top:20px;
-	padding: 10px;
-}
-.timers-row h1 {
-	margin-top: 5px;
-}
-.timers-row h2 {
-	color: black;	
-	margin-top: 0;
-	margin-bottom: 0;
-}
+
+/* Timers */
 .timer {
 	background-color: black;
 	color: white;
@@ -77,6 +43,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 	width: 100%;
 	text-align: center;
 	line-height: 1.2;
+}
+.on-deck .timer {
+	font-size: 90px;	
 }
 .three-timers .timer {
 	font-size:100px;
@@ -99,15 +68,54 @@ button:focus, button:active, .btn:focus, .btn:active {
 	}
   }
 
+/* Clock row */
+#clock {
+	background-color: rgba(255, 255, 255, .6);
+	height: 220px;
+	width: 220px;
+	border-radius: 50%;
+	border: 3px solid black;
+	font-weight: bold;
+	margin-top: 20px;
+}
+#clock p {
+	font-size: 50px;
+	margin-top: 20px;
+	padding-top: 55px;
+	color: black;	
+}
+/* .top-crewOrder {
+	background-color: rgba(255, 255, 255, .6);
+	border-radius: 6px;
+	border: 2px solid black;
+	margin-top: 15px;	
+}
+.top-crewOrder h3 {
+	margin-top: 10px;
+} */
+
+/* Timers Row */
+.timers-row {
+	background-color:  rgba(255, 255, 255, .5);
+	margin-top:20px;
+	padding: 10px;
+}
+.timers-row h1 {
+	margin-top: 5px;
+}
+.timers-row h2 {
+	color: black;	
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* Crews */
 .crew {
 	font-size: 45px;
 	font-weight: bold;
 }
 .crew-div h1 {
 	height: 50px;
-}
-.timers .btn {
-	margin: 5px;
 }
 
 /* Setup */
