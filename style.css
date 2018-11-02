@@ -38,11 +38,6 @@ a, a:hover, a:focus {
 button:focus, button:active, .btn:focus, .btn:active {
 	outline: none !important;
 }
-
-.deck-header {	
-	margin: 5px;
-	height: 89px;
-}
 .on-deck .timer {
 	font-size: 90px;
 	line-height: 1.2;		
