@@ -70,17 +70,21 @@ $(document).ready(function() {
 	let crewOrder;	
 	function crewSet() {								
 		crewOrder = $("#order").val(); //put crewOrder from form into string	
-		if(crewOrder != "") {			
-			$("#crew-order").html(crewOrder);//display crew order from form		
+		if(crewOrder != "") {					
 			crewArray = crewOrder.split(",");//put crew-order values into crewArray
 			localStorage.setObj("crews", crewArray);//store CrewArray locally	
 		}
 		else if(localStorage.getObj("crews") != null) {
-			crewArray = localStorage.getObj("crews");//get locally stored CrewArray			
+			crewArray = localStorage.getObj("crews");//get locally stored CrewArray						
 		}
 		else {
-			crewArray = [1,2,3,4,5,6];
-		}		
+			crewArray = [1,2,3,4,5,6];			
+		}
+		
+		//display crewOrder
+		crewOrder = crewArray.join(", ");
+		$(".crew-order").html(crewOrder);
+
 		//add "crew " in front of each array element
 		for (let i=0; i < crewArray.length; i++) {		
 			crewArray[i] = "Crew "+crewArray[i];
@@ -89,7 +93,7 @@ $(document).ready(function() {
 	crewSet();	
 	
 	//Constructor for timers
-	//(time in minutes, timer div, input from #adjust-timers form, .crew-div)
+	//(time in minutes, timer div, input from #adjust-timers form, .crew h1)
 	function Timer(minute,timerID,input,crewSpan) {
 		let min = minute-1;
 		let sec = 60;

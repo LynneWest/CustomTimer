@@ -2,14 +2,28 @@ body {
 	background-size: 100%;
 	background-attachment: fixed;	
 }
-#go {
-	margin-top: 20px;
-	font-size: 50px;
-	width: 35%;	
+.timers {
+	text-align: center;
+} 
+.timers h1 {
+	color: white;
 }
-#reset, #next, #setup-button {
-	font-size: 17px;
-	width: 35%;
+.top-crewOrder {
+	background-color: rgba(255, 255, 255, .6);
+	border-radius: 6px;
+	border: 2px solid black;
+	margin-top: 15px;	
+}
+.top-crewOrder h3 {
+	margin-top: 10px;
+}
+#go {	
+	font-size: 60px;
+	width: 75%;
+	margin: 40px auto 20px;			
+}
+#reset, #next, #setup-button {	
+	width: 25%;
 }
 a, a:hover, a:focus {
 	color: black;
@@ -20,8 +34,8 @@ button:focus, button:active, .btn:focus, .btn:active {
 }
 .on-deck {
 	background-color: rgba(200, 200, 200, .3);
-	padding-right: 30px;
-	padding-left: 30px;	
+	padding-right: 20px;
+	padding-left: 20px;	
 }
 .on-deck h1 {
 	margin: 5px;
@@ -42,8 +56,15 @@ button:focus, button:active, .btn:focus, .btn:active {
 	padding-top: 75px;
 	color: black;	
 }
+.timers-row {
+	color: white;
+}
 .timers-row h1 {
 	margin-top: 5px;
+}
+.timers-row h2 {	
+	margin-top: 0;
+	margin-bottom: 0;
 }
 .timer {
 	background-color: black;
@@ -69,17 +90,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 	  background-color: black;
 	}
   }
-.timers {
-	text-align: center;
-}
-.timers h1 {
-	color: white;
-}
-.timers-row h2 {
-	color: white;
-	margin-top: 0;
-	margin-bottom: 0;
-}
+
 .crew {
 	font-size: 45px;
 	font-weight: bold;
@@ -90,32 +101,39 @@ button:focus, button:active, .btn:focus, .btn:active {
 .timers .btn {
 	margin: 5px;
 }
+
+/* Setup */
 .setup-container {
 	margin-top: 50px;
 	background-color: rgba(255,255,255,.5);
-	color: black;
-	height: 320px;
+	color: black;	
+}
+input {
+	margin-top: 5px;
 }
 #setup h1 {	
 	font-weight: bold;
 	margin-bottom: 10px;
 }
-#crew-order {
-	font-size: 25px;
-	height: 50px;
-	margin-bottom: 25px;	
+label {
+	font-size: medium;
+	font-weight: 400;
 }
-#adjust-timers ul {
-	list-style-type: none;
-	padding: 0%;
+.crew-setup form {
+	margin: 0 auto;
+	width: 60%;
 }
-input {
-	margin-top: 5px;
+.crew-order {
+	font-size: 25px;	
 }
 .input-minutes{
-	width: 40px;
+	width: 80px !important;	
 }
 #setup button {
 	margin: 10px;
 	margin-top: 20px;
+	font-size: medium;
+}
+.top-btn {
+	margin: 15px 0;
 }

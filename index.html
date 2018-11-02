@@ -25,10 +25,14 @@
 			<div class="timers">
 				<div class="row clock-row">
 					<div class="col-sm-4">
-						<button type="button" class="btn btn-success" id="go">Go!</button><br>
-						<button type="button" class="btn btn-danger" id="reset">Reset</button><br>
-						<button type="button" class="btn" id="next">Next Crew</button><br>
-						<a href="#setup"><button type="button" class="btn btn-dark" id="setup-button">Setup</button></a>
+						<!-- <div class="top-crewOrder">
+							<h3>Crew Order:</h3>
+							<p class="crew-order"></p>
+						</div>										 -->
+						<button type="button" class="btn btn-success btn-lg" id="go">Go!</button>						
+						<a href="#setup"><button type="button" class="btn" id="setup-button">Setup</button></a>				
+						<button type="button" class="btn btn-danger" id="reset">Reset</button>
+						<button type="button" class="btn" id="next">Next Crew</button>						
 					</div>						
 					<div class="col-sm-4 on-deck">
 						<h1><span class="crew deckCrew"></span><br>on deck in:</h1>
@@ -40,86 +44,98 @@
 							<p id="clock-time"></p>
 						</div>
 					</div>					
-				</div>
+				</div> <!-- .clock-row end -->
 				<div class="row two-timers timers-row">					
 					<div class="col-sm-5 crew-div">
-						<h1> <span class="crew oneCrew"></span></h1>
+						<h1 class="crew oneCrew"></h1>
 						<div class="timer timer-one" id="timer-one"></div>
 						<h2>Station One<h2>
 						<button type="button" class="btn btn-danger pauseOne"><span class="glyphicon glyphicon-pause"></span></button>
 						<button type="button" class="btn btn-success playOne"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-5 col-sm-offset-2 crew-div">
-						<h1> <span class="crew twoCrew"></span></h1>
+						<h1 class="crew twoCrew"></h1>
 						<div class="timer timer-two" id="timer-two"></div>
 						<h2>Station Two</h2>
 						<button type="button" class="btn btn-danger pauseTwo"><span class="glyphicon glyphicon-pause"></span></button>
 						<button type="button" class="btn btn-success playTwo"><span class="glyphicon glyphicon-play"></span></button>
 					</div>									
-				</div>
+				</div> <!-- .two-timers end -->
 				<div class="row three-timers timers-row hidden">					
 					<div class="col-sm-4 crew-div">
-						<h1><span class="crew oneCrew"></span></h1>
+						<h1 class="crew oneCrew"></h1>
 						<div class="timer timer-one" id="timer-one"></div>
 						<h2>Station One<h2>
 						<button type="button" class="btn btn-danger pauseOne"><span class="glyphicon glyphicon-pause"></span></button>
 						<button type="button" class="btn btn-success playOne"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-4 crew-div">
-						<h1><span class="crew twoCrew"></span></h1>
+						<h1 class="crew twoCrew"></h1>
 						<div class="timer timer-two" id="timer-two"></div>
 						<h2>Station Two</h2>
 						<button type="button" class="btn btn-danger pauseTwo"><span class="glyphicon glyphicon-pause"></span></button>
 						<button type="button" class="btn btn-success playTwo"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-4 crew-div">
-						<h1><span class="crew threeCrew"></span></h1>
+						<h1 class="crew threeCrew"></h1>
 						<div class="timer timer-three" id="timer-three"></div>
 						<h2>Station Three</h2>
 						<button type="button" class="btn btn-danger pauseThree"><span class="glyphicon glyphicon-pause"></span></button>
 						<button type="button" class="btn btn-success playThree"><span class="glyphicon glyphicon-play"></span></button>
 					</div>					
-				</div>
-			</div>			
+				</div> <!-- .three-timers end -->
+			</div> <!-- .timers end -->			
 		</div>
 		<div class = "container setup-container text-center">
 			<div class="col-xs-12"id="setup">
 				<h1>Setup</h1>
 				<div class="row">
 					<div class="col-sm-4">
-						<h4>Number of Stations:</h4>
-						<form>
-  							<input type="radio" checked="checked" name="stations" id="2" checked>2 Stations<br>
-  							<input type="radio" name="stations" id="3">3 Stations<br>	
-						</form>
+						<h4>Number of Stations:</h4>						
+						<div class="radio">
+							<label><input type="radio" checked="checked" id="2" name="stations" checked>2 Stations</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="stations" id="3">3 Stations</label>
+						</div>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4 crew-setup">
 						<h4>Current Crew Order:</h4>
-						<p id="crew-order"></p>
+						<p class="crew-order"></p>
 						<h4>Enter Crew Order:</h4>
 						<form>
-							<input type="text" id="order"placeholder="separate by comma"><br>
+							<input type="text" class="form-control input-lg" id="order" placeholder="separate by comma">
 						</form>
 						<button type="button" class="btn submit" id="submit-crew">Submit</button>						
 					</div>
 					<div class="col-sm-4">
 						<h4>Adjust Timer Minutes:</h4>
-						<form id="adjust-timers">
-							<ul>
-								<li>On Deck Timer: <input type="number" class="input-minutes" id="deckInput"> minutes<br></li>
-								<li>Station 1 Timer: <input type="number" class="input-minutes" id="oneInput"> minutes<br></li>
-								<li>Station 2 Timer: <input type="number" class="input-minutes" id="twoInput"> minutes<br></li>
-								<li id="three-time-box" class="hidden">Station 3 Timer: <input type="number" class="input-minutes" id="threeInput"> minutes<br></li>
-							</ul>
+						<form id="adjust-timers" class="form-inline">
+							<div class="form-group">
+								<label for="deckInput">On Deck Timer: </label>
+								<input type="number" class="form-control input-lg input-minutes" id="deckInput" min=1>
+							</div>
+							<div class="form-group">
+								<label for="oneInput">Station 1 Timer:</label>
+								<input type="number" class="form-control input-lg input-minutes" id="oneInput" min=1>
+							</div>
+							<div class="form-group">
+								<label for="twoInput">Station 2 Timer: </label>
+								<input type="number" class="form-control input-lg input-minutes" id="twoInput" min=1>
+							</div>
+							<div class="form-group hidden" id="three-time-box" >
+								<label for="threeInput">Station 3 Timer: </label>
+								<input type="number" class="form-control input-lg input-minutes" id="threeInput" min=1>
+							</div>							
 						</form>
 						<button type="button" class="btn submit" id="submit-time">Submit</button>						
 					</div>
-				</div>
-				<div>
-					<a href="#"><button type="button" class="btn" id="top">Return to Top</button></a>
-				</div>				
+				</div>								
 			</div>
-		</div><!-- close setup-container div -->
+		</div><!-- .setup-container end -->
+		<div class="text-center top-btn">
+			<a href="#"><button type="button" class="btn btn-warning" id="top">Return to Top</button></a>
+		</div>
 
 		<script data-require="jquery@2.1.4" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>		
