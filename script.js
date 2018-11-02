@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	//Change defualt times here
 	const deckTimer = 5;
-	const stationOneTimer = 2;
+	const stationOneTimer = 4;
 	const stationTwoTimer = 3;
 	const stationThreeTimer = 10;	
 
@@ -127,11 +127,7 @@ $(document).ready(function() {
 				self.done = true;										
 				self.resetTime();				
 				timerDone();
-			}
-			else if(min === 0 && sec === 0) {
-				$(timerID).html(min+":0"+sec)							
-				min--;								
-			}								
+			}											
 			else if(sec === 0) {
 				$(timerID).html(min+":0"+sec)							
 				min--;
@@ -154,11 +150,12 @@ $(document).ready(function() {
 					$(timerID).removeClass("red-timer");
 				}
 
-				// flash red at halfway point
-				const halfMin = Math.floor(minute/2);//remove fraction from odd numbered minute
-				if((min === halfMin && minute > 2) && (minute%2 === 0 && sec === 1 || minute%2 != 0 && sec === 30)) {
-					$(timerID).addClass("fade-red");						
-				}				
+				// flash red at halfway point				
+				if(minute > 2) {
+					if(minute%2 != 0 && sec === 30 && min === Math.floor(minute/2) || minute%2 === 0 && sec === 60 && min === minute/2-1) {
+						$(timerID).addClass("fade-red");
+					}					
+				}							
 			}						
 		}//countdown() end		
 
