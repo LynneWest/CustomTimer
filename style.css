@@ -102,16 +102,15 @@ button:focus, button:active, .btn:focus, .btn:active {
 }
 #clock {
 	background-color: rgba(255, 255, 255, .6);
-	height: 220px;
-	width: 220px;
+	height: 210px;
+	width: 210px;
 	border-radius: 50%;
 	border: 3px solid black;
 	font-weight: bold;	
 }
 #clock p {
-	font-size: 50px;
-	margin-top: 20px;
-	padding-top: 55px;
+	font-size: 50px;	
+	padding-top: 67px;
 	color: black;	
 }
 /* .top-crewOrder {
@@ -131,6 +130,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 	padding: 10px;
 }
 .timers-row h2 {
+	font-weight: bold;
 	color: black;	
 	margin-top: 0;
 	margin-bottom: 0;
@@ -187,6 +187,9 @@ label {
 @media(max-width: 992px) {	
 	.timer {
 		font-size: 100px;
+	}
+	.on-deck .timer {
+		font-size: 80px;	
 	}
 	.three-timers .timer {
 		font-size: 80px;
