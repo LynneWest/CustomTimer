@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	//Change defualt times here
 	const deckTimer = 5;
-	const stationOneTimer = 4;
+	const stationOneTimer = 2;
 	const stationTwoTimer = 3;
 	const stationThreeTimer = 10;	
 
@@ -121,12 +121,16 @@ $(document).ready(function() {
 
 			sec--;					
 
-			if(min === 0 && sec === 0) {								
+			if(min < 0) {
 				$(self.crewSpan).html("");
 				self.stopCountdown();											
 				self.done = true;										
 				self.resetTime();				
-				timerDone();								
+				timerDone();
+			}
+			else if(min === 0 && sec === 0) {
+				$(timerID).html(min+":0"+sec)							
+				min--;								
 			}								
 			else if(sec === 0) {
 				$(timerID).html(min+":0"+sec)							
