@@ -18,13 +18,17 @@ body {
 	margin-top: 10px;
 }
 #go {
-	font-size: 40px;	
+	font-size: 50px;	
 	width: 75%;
 	margin: 40px auto 20px;			
 }
-#reset, #next, #setup-button {	
-	width: 25%;
+#reset, #next {	
+	width: 35%;
 }
+#setup-button {
+	width:60%
+}
+
 a, a:hover, a:focus {
 	color: black;
 	outline: none;
@@ -134,6 +138,9 @@ label {
 }
 .input-minutes{
 	width: 80px !important;	
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 36px;	
 }
 #setup button {
 	margin: 10px;
