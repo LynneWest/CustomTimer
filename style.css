@@ -88,7 +88,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 	font-weight: bold;	
 }
 .fade-red {
-	animation-duration: 3s;
+	animation-duration: 10s;
 	animation-name: fadeRed;
 }  
   @keyframes fadeRed {

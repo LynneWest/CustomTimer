@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
 	//Change defualt times here
-	const deckTimer = 12;
-	const stationOneTimer = 10;
-	const stationTwoTimer = 10;
+	const deckTimer = 5;
+	const stationOneTimer = 4;
+	const stationTwoTimer = 3;
 	const stationThreeTimer = 10;	
 
 	//Check current time and display on clock using recursive setTimeout()
@@ -105,7 +105,7 @@ $(document).ready(function() {
 		this.pause = false;					
 
 		this.startCountdown = function() {			
-			this.startTimer = setInterval(function(){countdown();},1000);		
+			this.startTimer = setInterval(function(){countdown();},500);		
 			this.running = true;
 			this.done = false;
 			this.pause = false;													
@@ -117,16 +117,19 @@ $(document).ready(function() {
 		};
 		
 		//display countdown on timer
-		function countdown() {			
-			sec--;			
-			if(min === 0 && sec === 0) {				
+		function countdown() {	
+
+			sec--;					
+
+			if(min === 0 && sec === 0) {								
 				$(self.crewSpan).html("");
 				self.stopCountdown();											
 				self.done = true;										
 				self.resetTime();				
 				timerDone();								
 			}								
-			else if(sec === 0) {			
+			else if(sec === 0) {
+				$(timerID).html(min+":0"+sec)							
 				min--;
 				sec = 60;			
 			}
@@ -149,7 +152,7 @@ $(document).ready(function() {
 
 				// flash red at halfway point
 				const halfMin = Math.floor(minute/2);//remove fraction from odd numbered minute
-				if((min === halfMin && minute > 2) && (minute%2 === 0 && sec === 1 || minute%2 != 0 && sec === 31)) {
+				if((min === halfMin && minute > 2) && (minute%2 === 0 && sec === 1 || minute%2 != 0 && sec === 30)) {
 					$(timerID).addClass("fade-red");						
 				}				
 			}						
