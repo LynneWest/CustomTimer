@@ -35,10 +35,11 @@ button:focus, button:active, .btn:focus, .btn:active {
 .on-deck {
 	background-color: rgba(200, 200, 200, .3);
 	padding-right: 20px;
-	padding-left: 20px;	
+	padding-left: 20px;		
 }
 .on-deck h1 {
 	margin: 5px;
+	height: 89px;
 }
 .on-deck .timer {
 	font-size: 75px;		

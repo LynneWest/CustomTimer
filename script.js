@@ -140,11 +140,11 @@ $(document).ready(function() {
 			if(timerID != "#deck-timer") {
 				//make timer red when timer is 1 min or less
 				if(min === 0) {
-				$(timerID).addClass("red-timer");				
+					$(timerID).addClass("red-timer");				
 				}
 				//remove red on timer when timer has more than 1 min 
 				else{
-				$(timerID).removeClass("red-timer");
+					$(timerID).removeClass("red-timer");
 				}
 
 				// flash red at halfway point
@@ -192,7 +192,8 @@ $(document).ready(function() {
 		this.crew = 0;
 		this.nextCrew = function() {			
 			if(crewArray[this.crew] === undefined) {
-				$(crewSpan).html("");				
+				$(crewSpan).html("");
+				$(".deck-h1").addClass("hidden");				
 			}
 			else {
 				$(crewSpan).html(crewArray[this.crew]);							
@@ -200,7 +201,7 @@ $(document).ready(function() {
 			}
 			return this.crew;			
 		}
-	} //Timer constructor end
+	}//Timer constructor end
 
 	//Create new Timer objects
 	const onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
@@ -259,7 +260,8 @@ $(document).ready(function() {
 		station3.reset();
 		loadCrews();
 		$(station2['crewSpan']).html("");
-		$(station3['crewSpan']).html("");				
+		$(station3['crewSpan']).html("");
+		$(".deck-h1").removeClass("hidden");				
 	});
 	
 	//move all crews through stations when next button is clicked
