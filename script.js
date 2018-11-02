@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
 	//Change defualt times here
-	const deckTimer = 5;
-	const stationOneTimer = 4;
-	const stationTwoTimer = 3;
+	const deckTimer = 12;
+	const stationOneTimer = 10;
+	const stationTwoTimer = 10;
 	const stationThreeTimer = 10;	
 
 	//Check current time and display on clock using recursive setTimeout()
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		}        
 	});		
 	
-	//store objects locally
+	//store and retrieve objects, locally
 	Storage.prototype.setObj = function(key, obj) {
 		return this.setItem(key, JSON.stringify(obj))
 	}
@@ -105,7 +105,7 @@ $(document).ready(function() {
 		this.pause = false;					
 
 		this.startCountdown = function() {			
-			this.startTimer = setInterval(function(){countdown();},500);		
+			this.startTimer = setInterval(function(){countdown();},1000);		
 			this.running = true;
 			this.done = false;
 			this.pause = false;													
