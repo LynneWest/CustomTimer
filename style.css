@@ -26,9 +26,11 @@ body {
 	width: 35%;
 }
 #setup-button {
-	width:60%
+	width: 30%;	
 }
-
+#setup-button:hover, #next:hover {
+	background-color: #999;
+}
 a, a:hover, a:focus {
 	color: black;
 	outline: none;
@@ -157,5 +159,8 @@ label {
 	}
 	.three-timers .timer {
 		font-size: 80px;
+	}
+	#reset, #next, #setup-button {	
+		width: 50%;
 	}
 }
