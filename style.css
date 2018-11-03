@@ -20,14 +20,15 @@ body {
 	color: black;	
 	width: 75%;
 	margin: 20px auto 10px;
-	background-color: rgb(88, 182, 88);
-	border: 3px solid black;
-	border-radius: 6px;	
+	/* background-color: rgb(88, 182, 88); */
+	border: 1px solid black;
+	border-radius: 4px;	
 	-webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;			
+	transition-duration: 0.4s;			
 }
+
 #go:hover {
-	background-color: rgb(54, 153, 54);	
+	/* background-color: rgb(54, 153, 54);	 */
 }
 #reset, #next {	
 	width: 35%;
@@ -39,16 +40,19 @@ body {
 #setup-button {
 	width: 28%;	
 }
-#top {
-	background-color: #ff9100;
+#top {	
 	border: 2px solid black;
-}
-#top:hover {
-	background-color: #f0ab2a;
 }
 .btn:hover {
 	background-color: #999;
 	color: black;	
+}
+.orng {
+	background-color: 	rgba(255,145,0, .6);
+	
+}
+.orng:hover {
+	background-color: 	rgb(255, 174, 0);
 }
 a, a:hover, a:focus {
 	color: black;
@@ -60,7 +64,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 
 /* Timers */
 .timer {
-	background-color: black;
+	background-color: black;	
 	color: white;
 	font-size: 120px;
 	width: 100%;
@@ -108,8 +112,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 	height: 210px;
 	width: 210px;
 	border-radius: 50%;
-	border: 3px solid black;
-	font-weight: bold;	
+	border: 3px solid black;		
 }
 #clock p {
 	font-size: 50px;	
@@ -129,6 +132,8 @@ button:focus, button:active, .btn:focus, .btn:active {
 /* ----- Timers Row ----- */
 .timers-row {
 	background-color:  rgba(255, 255, 255, .5);
+	border: 2px solid black;
+	border-radius: 3px;
 	margin-top:20px;
 	padding: 10px;
 }
@@ -137,6 +142,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 	color: black;	
 	margin-top: 0;
 	margin-bottom: 0;
+}
+.two-timers {
+	padding: 8px 30px;
 }
 
 /* ----- Crews ----- */
@@ -152,7 +160,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 .setup-container {
 	margin-top: 50px;
 	background-color: rgba(255,255,255,.7);
-	color: black;	
+	color: black;
+	border: 2px solid black;
+	border-radius: 3px;	
 }
 input {
 	margin-top: 5px;
