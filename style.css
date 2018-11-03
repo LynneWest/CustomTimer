@@ -212,6 +212,9 @@ label {
 	#reset, #next, #setup-button {	
 		width: 50%;
 	}
+	#go {
+		font-size: 45px;
+	}
 }
 @media(max-width: 1200px) {
 	.deckCrew {
