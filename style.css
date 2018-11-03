@@ -100,6 +100,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 	margin-top:
 	20px;
 }
+.on-deck h1 {
+	margin-bottom: 5px;
+}
 #clock {
 	background-color: rgba(255, 255, 255, .6);
 	height: 210px;
