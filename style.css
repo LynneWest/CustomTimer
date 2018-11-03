@@ -39,7 +39,7 @@ body {
 	border: 2px solid black;
 }
 .btn:hover {
-	background-color: #999;
+	background-color: 	rgba(255,145,0, .6);
 	color: black;	
 }
 .orng {
