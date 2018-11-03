@@ -19,16 +19,11 @@ body {
 	font-size: 50px;
 	color: black;	
 	width: 75%;
-	margin: 20px auto 10px;
-	/* background-color: rgb(88, 182, 88); */
+	margin: 20px auto 10px;	
 	border: 1px solid black;
 	border-radius: 4px;	
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;			
-}
-
-#go:hover {
-	/* background-color: rgb(54, 153, 54);	 */
 }
 #reset, #next {	
 	width: 35%;
