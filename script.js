@@ -22,7 +22,7 @@ $(document).ready(function() {
 			sec="0"+sec;
 		}
 		$("#clock-time").html(hour+":"+min+":"+sec);		
-		setTimeout(clock, 500);
+		setTimeout(clock, 250);
 	}
 	clock();
 	
