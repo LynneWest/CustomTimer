@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
 	//Change defualt times here
-	const deckTimer = 12;
-	const stationOneTimer = 10;
-	const stationTwoTimer = 10;
-	const stationThreeTimer = 10;	
+	const deckTimer = 2;
+	const stationOneTimer = 1;
+	const stationTwoTimer = 1;
+	const stationThreeTimer = 1;	
 
 	//Check current time and display on clock using recursive setTimeout()
 	function clock() {
@@ -104,7 +104,7 @@ $(document).ready(function() {
 		this.startTimer;
 		this.pause = false;					
 
-		this.startCountdown = function() {			
+		this.startCountdown = function() {									
 			this.startTimer = setInterval(function(){countdown();},1000);		
 			this.running = true;
 			this.done = false;
@@ -117,16 +117,15 @@ $(document).ready(function() {
 		};
 		
 		//display countdown on timer
-		function countdown() {	
-
-			sec--;					
-
-			if(min < 0) {
+		function countdown() {			
+			sec--;
+						
+			if(min < 0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01
 				$(self.crewSpan).html("");
 				self.stopCountdown();											
 				self.done = true;										
-				self.resetTime();				
-				timerDone();
+				self.resetTime();
+				timerDone();				
 			}											
 			else if(sec === 0) {
 				$(timerID).html(min+":0"+sec)							
@@ -220,27 +219,27 @@ $(document).ready(function() {
 	}	
 	loadCrews();
 	
-	//start and move crews through timers
-	function timerDone() {			
-		if(onDeck.done && crewArray[onDeck.crew] != undefined) {		
-			onDeck.nextCrew();						
-			onDeck.startCountdown();			
-		}		
-		if(station1.done && crewArray[station1.crew] != undefined && (station1.crew+1 < onDeck.crew || onDeck.done)) {			
-			station1.nextCrew();
-			station1.startCountdown();			
-		}				
-		if((station2.done && station2.crew+1 < station1.crew || station1.done && station2.crew < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false) {			
-			station2.nextCrew();
-			station2.startCountdown();			
-		}		
+	//start and move crews through timers	
+	function timerDone() {
 		if((station3.done && station3.crew+1 < station2.crew || station2.done && station3.crew < station2.crew) && threeHidden === false && station3.running === false && crewArray[station3.crew] != undefined && station3.pause === false) {
 			station3.nextCrew();
 			station3.startCountdown();
-		}													
+		}
+		if((station2.done && station2.crew+1 < station1.crew || station1.done && station2.crew < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false) {			
+			station2.nextCrew();
+			station2.startCountdown();			
+		}
+		if(station1.done && crewArray[station1.crew] != undefined && (station1.crew+1 < onDeck.crew || onDeck.done)) {			
+			station1.nextCrew();
+			station1.startCountdown();			
+		}
+		if(onDeck.done && crewArray[onDeck.crew] != undefined) {		
+			onDeck.nextCrew();						
+			onDeck.startCountdown();			
+		}					
 	}	
 
-	//when go pushed start all timers with crews if no timers are running
+	//when go pushed, start all timers with crews, if no timers are running
 	$("#go").click(function() {
 		if(onDeck.running === false && station1.running === false && station2.running === false && station3.running === false) {			
 			onDeck.startCountdown();
@@ -279,22 +278,29 @@ $(document).ready(function() {
 
 	//pause station1 timer and onDeck timer when station1 pause is clicked	
 	$(".pauseOne").click(function()	{
-		onDeck.stopCountdown();
-		station1.stopCountdown();
-		onDeck.pause = true;
-		station1.pause = true;		
+		if(station1.running) {
+			onDeck.stopCountdown();
+			station1.stopCountdown();
+			onDeck.pause = true;
+			station1.pause = true;
+		}				
 	});
 
 	//pause station2 timer when station2 pause is clicked
-	$(".pauseTwo").click(function()	{		
-		station2.stopCountdown();	
-		station2.pause = true;	
+	$(".pauseTwo").click(function()	{
+		if(station2.running) {
+			station2.stopCountdown();	
+			station2.pause = true;
+		}			
 	});
 
 	//pause station3 timer when station3 pause is clicked
 	$(".pauseThree").click(function() {
-		station3.stopCountdown();
-		station3.pause = true;		
+		if(station3.running) {
+			station3.stopCountdown();
+			station3.pause = true;
+		}
+				
 	});
 
 	//add one minute to onDeck timer when add one minute button is clicked
@@ -303,10 +309,10 @@ $(document).ready(function() {
 	});
 
 	//when station1 play is pushed start station1, start onDeck if it still has a crew
-	$(".playOne").click(function() {		
+	$(".playOne").click(function() {				
 		if (station1.running === false && $(station1['crewSpan']).html() != "") {
 			station1.startCountdown();
-			if(crewArray[onDeck.crew] != undefined && onDeck.running === false) {
+			if(crewArray[station1.crew] != undefined && onDeck.running === false) {
 				onDeck.startCountdown();
 			}
 		}				
