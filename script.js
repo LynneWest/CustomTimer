@@ -1,10 +1,10 @@
 $(document).ready(function() {
 
 	//Change defualt times here
-	const deckTimer = 2;
-	const stationOneTimer = 1;
-	const stationTwoTimer = 1;
-	const stationThreeTimer = 1;	
+	const deckTimer = 12;
+	const stationOneTimer = 10;
+	const stationTwoTimer = 10;
+	const stationThreeTimer = 10;	
 
 	//Check current time and display on clock using recursive setTimeout()
 	function clock() {
