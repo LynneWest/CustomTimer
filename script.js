@@ -120,7 +120,7 @@ $(document).ready(function() {
 		function countdown() {			
 			sec--;
 						
-			if(min < 0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01
+			if(min===0 && sec===0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01
 				$(self.crewSpan).html("");
 				self.stopCountdown();											
 				self.done = true;										
