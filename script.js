@@ -1,11 +1,5 @@
 $(document).ready(function() {
-
-	//Change defualt times here
-	const deckTimer = 12;
-	const stationOneTimer = 10;
-	const stationTwoTimer = 10;
-	const stationThreeTimer = 10;	
-
+	
 	//Check current time and display on clock using recursive setTimeout()
 	function clock() {
 		const d = new Date();
@@ -26,36 +20,17 @@ $(document).ready(function() {
 	}
 	clock();
 	
+	//Defualt times
+	const deckTimer = 12;
+	const stationOneTimer = 10;
+	const stationTwoTimer = 10;
+	const stationThreeTimer = 10;
+	
 	//Display defualt times in timers
 	$("#deck-timer").html(deckTimer+":00");
 	$("#timer-one").html(stationOneTimer+":00");
 	$("#timer-two").html(stationTwoTimer+":00");
-	$("#timer-three").html(stationThreeTimer+":00");
-
-	//Display two timers or three timers depending on radio button selection
-	let threeHidden = true;	
-	$("input[name=stations]").change(function() {     
-		if($("#2").is(":checked")) {
-			$(".two-timers").removeClass("hidden");
-			$(".three-timers").addClass("hidden");
-			$("#three-time-box").addClass("hidden");
-			onDeck.resetTime();
-			station1.resetTime();
-			station2.resetTime();
-			station3.resetTime();
-			threeHidden = true;        		
-		}
-		else {
-			$(".two-timers").addClass("hidden");
-			$(".three-timers").removeClass("hidden");
-			$("#three-time-box").removeClass("hidden");
-			onDeck.resetTime();
-			station1.resetTime();
-			station2.resetTime();
-			station3.resetTime();
-			threeHidden = false;				
-		}        
-	});		
+	$("#timer-three").html(stationThreeTimer+":00");	
 	
 	//Store and retrieve objects, locally
 	Storage.prototype.setObj = function(key, obj) {
@@ -108,12 +83,12 @@ $(document).ready(function() {
 			this.running = true;
 			this.done = false;
 			this.pause = false;													
-		};		
+		}		
 		
 		this.stopCountdown = function() {			
 			clearInterval(this.startTimer);
 			this.running = false;												
-		};
+		}
 		
 		//display countdown on timer
 		function countdown() {			
@@ -146,7 +121,6 @@ $(document).ready(function() {
 				else{
 					$(timerID).removeClass("red-timer");
 				}
-
 				//Flash red at halfway point				
 				if(minute > 2) {
 					if(minute%2 != 0 && sec === 30 && min === Math.floor(minute/2) || minute%2 === 0 && sec === 60 && min === minute/2-1) {
@@ -156,7 +130,7 @@ $(document).ready(function() {
 			}						
 		}//countdown() end		
 
-		//Adjust default time to time from input form
+		//Adjust time to minutes from input form
 		this.newTime = function() {
 			if($(input).val() !== "") {
 				minute = $(input).val();
@@ -171,13 +145,13 @@ $(document).ready(function() {
 			if(this.running === false) {
 				$(timerID).html((min+1)+":00");	
 			}			
-		};		
+		}
 
 		//Reset times and crew index
 		this.reset = function()	{
 			this.resetTime();
 			this.crew = 0;			
-		};
+		}
 		
 		//Reset times
 		this.resetTime = function() {
@@ -208,13 +182,19 @@ $(document).ready(function() {
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
 	
-	//Put crews to timers
-	function loadCrews() {	
+	//Reset all timer minutes and crew indexes
+	function resetAll() {
+		onDeck.reset();
+		station1.reset();
+		station2.reset();
+		station3.reset();
+		crewSet();
 		onDeck.nextCrew();
 		onDeck.nextCrew();
-		station1.nextCrew();		
-	}	
-	loadCrews();
+		station1.nextCrew();
+		$(station2['crewSpan']).html("");
+		$(station3['crewSpan']).html("");
+	}
 	
 	//Start and move crews through timers	
 	function timerDone() {
@@ -252,15 +232,7 @@ $(document).ready(function() {
 
 	//When reset clicked reset all timers and set first crews to timers
 	$("#reset").click(function() {		
-		crewSet();
-		onDeck.reset();
-		station1.reset();
-		station2.reset();
-		station3.reset();
-		loadCrews();
-		$(station2['crewSpan']).html("");
-		$(station3['crewSpan']).html("");
-		$(".deck-h1").removeClass("hidden");				
+		resetAll();									
 	});
 	
 	//When next is clicked move all crews through stations
@@ -328,14 +300,27 @@ $(document).ready(function() {
 		}
 	});
 
+	//Display two timers or three timers depending on radio button selection
+	let threeHidden = true;	
+	$("input[name=stations]").change(function() {     
+		if($("#2").is(":checked")) {
+			$(".two-timers").removeClass("hidden");
+			$(".three-timers").addClass("hidden");
+			$("#three-time-box").addClass("hidden");			
+			threeHidden = true;        		
+		}
+		else {
+			$(".two-timers").addClass("hidden");
+			$(".three-timers").removeClass("hidden");
+			$("#three-time-box").removeClass("hidden");			
+			threeHidden = false;				
+		}		 
+		resetAll();       
+	});		
+
 	//When submit button on crew form is clicked set and display crew order, set first crews to stations
-	$("#submit-crew").click(function() {
-		crewSet();		
-		onDeck.reset();
-		station1.reset();
-		station2.reset();
-		station3.reset();		
-		loadCrews();						
+	$("#submit-crew").click(function() {				
+		resetAll();						
 	});
 	
 	//When submit button on 'adjust timer minutes' form is clicked adjust timers to user input minutes
@@ -344,9 +329,6 @@ $(document).ready(function() {
 		station1.newTime();
 		station2.newTime();
 		station3.newTime();
-		onDeck.reset();
-		station1.reset();
-		station2.reset();
-		station3.reset();		
+		resetAll();		
 	});
 });
