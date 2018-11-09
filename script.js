@@ -26,7 +26,7 @@ $(document).ready(function() {
 	}
 	clock();
 	
-	//display defualt times in timers
+	//Display defualt times in timers
 	$("#deck-timer").html(deckTimer+":00");
 	$("#timer-one").html(stationOneTimer+":00");
 	$("#timer-two").html(stationTwoTimer+":00");
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		}        
 	});		
 	
-	//store and retrieve objects, locally
+	//Store and retrieve objects, locally
 	Storage.prototype.setObj = function(key, obj) {
 		return this.setItem(key, JSON.stringify(obj))
 	}
@@ -65,35 +65,34 @@ $(document).ready(function() {
 		return JSON.parse(this.getItem(key))
 	}
 
-	//set and display crew order
+	//Set and display crew order
 	let crewArray;	
 	let crewOrder;	
 	function crewSet() {								
-		crewOrder = $("#order").val(); //put crewOrder from form into string	
+		crewOrder = $("#order").val(); //Put crewOrder from form into string	
 		if(crewOrder != "") {					
-			crewArray = crewOrder.split(",");//put crew-order values into crewArray
-			localStorage.setObj("crews", crewArray);//store CrewArray locally	
+			crewArray = crewOrder.split(",");//Put crewOrder values into crewArray
+			localStorage.setObj("crews", crewArray);//Store CrewArray locally	
 		}
 		else if(localStorage.getObj("crews") != null) {
-			crewArray = localStorage.getObj("crews");//get locally stored CrewArray						
+			crewArray = localStorage.getObj("crews");//Get locally stored CrewArray						
 		}
 		else {
-			crewArray = [1,2,3,4,5,6];			
+			crewArray = [1,2,3,4,5,6];//Default crew order			
 		}
 		
-		//display crewOrder
+		//Display crewOrder
 		crewOrder = crewArray.join(", ");
 		$(".crew-order").html(crewOrder);
 
-		//add "crew " in front of each array element
+		//Add "Crew " in front of each array element
 		for (let i=0; i < crewArray.length; i++) {		
 			crewArray[i] = "Crew "+crewArray[i];
 		}								
 	}
 	crewSet();	
 	
-	//Constructor for timers
-	//(time in minutes, timer div, input from #adjust-timers form, .crew h1)
+	//Constructor for timers (time in minutes, timer div, input from #adjust-timers form, .crew h1)
 	function Timer(minute,timerID,input,crewSpan) {
 		let min = minute-1;
 		let sec = 60;
@@ -136,20 +135,19 @@ $(document).ready(function() {
 				$(timerID).html(min+":"+sec);						
 			}
 			else {
-				$(timerID).html(min+":0"+sec);//add zero if seconds below 10
+				$(timerID).html(min+":0"+sec);
 			}			
 			
 			if(timerID != "#deck-timer") {
-				//make timer red when timer is 1 min or less
+				//Make timer red when timer is 1 min or less
 				if(min === 0) {
 					$(timerID).addClass("red-timer");				
-				}
-				//remove red on timer when timer has more than 1 min 
+				}				
 				else{
 					$(timerID).removeClass("red-timer");
 				}
 
-				// flash red at halfway point				
+				//Flash red at halfway point				
 				if(minute > 2) {
 					if(minute%2 != 0 && sec === 30 && min === Math.floor(minute/2) || minute%2 === 0 && sec === 60 && min === minute/2-1) {
 						$(timerID).addClass("fade-red");
@@ -158,7 +156,7 @@ $(document).ready(function() {
 			}						
 		}//countdown() end		
 
-		//adjust default time to time from input form
+		//Adjust default time to time from input form
 		this.newTime = function() {
 			if($(input).val() !== "") {
 				minute = $(input).val();
@@ -167,7 +165,7 @@ $(document).ready(function() {
 			}						
 		}
 
-		// add one minute to timer
+		//Add one minute to timer
 		this.addMin = function() {
 			min++;
 			if(this.running === false) {
@@ -175,13 +173,13 @@ $(document).ready(function() {
 			}			
 		};		
 
-		//reset timer times and crew index
+		//Reset times and crew index
 		this.reset = function()	{
 			this.resetTime();
 			this.crew = 0;			
 		};
 		
-		//reset timer times
+		//Reset times
 		this.resetTime = function() {
 			$(timerID).removeClass("red-timer");
 			self.stopCountdown();			
@@ -191,7 +189,7 @@ $(document).ready(function() {
 			$(timerID).removeClass("fade-red");			
 		}
 
-		//move crew numbers through stations
+		//Move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function() {			
 			if(crewArray[this.crew] === undefined) {
@@ -200,8 +198,7 @@ $(document).ready(function() {
 			else {
 				$(crewSpan).html(crewArray[this.crew]);							
 				this.crew++;				
-			}
-			return this.crew;			
+			}					
 		}
 	}//Timer constructor end
 
@@ -211,7 +208,7 @@ $(document).ready(function() {
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
 	
-	//put crews on timers
+	//Put crews to timers
 	function loadCrews() {	
 		onDeck.nextCrew();
 		onDeck.nextCrew();
@@ -219,7 +216,7 @@ $(document).ready(function() {
 	}	
 	loadCrews();
 	
-	//start and move crews through timers	
+	//Start and move crews through timers	
 	function timerDone() {
 		if((station3.done && station3.crew+1 < station2.crew || station2.done && station3.crew < station2.crew) && threeHidden === false && station3.running === false && crewArray[station3.crew] != undefined && station3.pause === false) {
 			station3.nextCrew();
@@ -239,7 +236,7 @@ $(document).ready(function() {
 		}					
 	}	
 
-	//when go pushed, start all timers with crews, if no timers are running
+	//When go clicked, start all timers with crews, if no timers are running
 	$("#go").click(function() {
 		if(onDeck.running === false && station1.running === false && station2.running === false && station3.running === false) {			
 			onDeck.startCountdown();
@@ -253,7 +250,7 @@ $(document).ready(function() {
 		}			
 	});
 
-	//reset all timers and set first crews to timers
+	//When reset clicked reset all timers and set first crews to timers
 	$("#reset").click(function() {		
 		crewSet();
 		onDeck.reset();
@@ -266,7 +263,7 @@ $(document).ready(function() {
 		$(".deck-h1").removeClass("hidden");				
 	});
 	
-	//move all crews through stations when next button is clicked
+	//When next is clicked move all crews through stations
 	$("#next").click(function()	{		
 		onDeck.nextCrew();
 		station1.nextCrew();
@@ -276,7 +273,7 @@ $(document).ready(function() {
 		}				
 	});
 
-	//pause station1 timer and onDeck timer when station1 pause is clicked	
+	//When station1 pause is clicked pause station1 timer and onDeck timer	
 	$(".pauseOne").click(function()	{
 		if(station1.running) {
 			onDeck.stopCountdown();
@@ -286,7 +283,7 @@ $(document).ready(function() {
 		}				
 	});
 
-	//pause station2 timer when station2 pause is clicked
+	//When station2 pause is clicked pause station2 timer 
 	$(".pauseTwo").click(function()	{
 		if(station2.running) {
 			station2.stopCountdown();	
@@ -294,21 +291,20 @@ $(document).ready(function() {
 		}			
 	});
 
-	//pause station3 timer when station3 pause is clicked
+	//When station3 pause is clicked pause station3 timer
 	$(".pauseThree").click(function() {
 		if(station3.running) {
 			station3.stopCountdown();
 			station3.pause = true;
-		}
-				
+		}				
 	});
 
-	//add one minute to onDeck timer when add one minute button is clicked
+	//When 'add 1 minute' button is clicked add one minute to onDeck timer
 	$("#add-min-button").click(function() {
 		onDeck.addMin();
 	});
 
-	//when station1 play is pushed start station1, start onDeck if it still has a crew
+	//When station1 play is clicked start station1, start onDeck if it has a crew
 	$(".playOne").click(function() {				
 		if (station1.running === false && $(station1['crewSpan']).html() != "") {
 			station1.startCountdown();
@@ -318,21 +314,21 @@ $(document).ready(function() {
 		}				
 	});	
 
-	//when station2 play is pushed start station2 timer
+	//When station2 play is clicked start station2 timer
 	$(".playTwo").click(function() {		
 		if(station2.running === false && $(station2['crewSpan']).html() != "") {	
 			station2.startCountdown();
 		}				
 	});
 
-	//when station3 play is pushed start station3 timer
+	//When station3 play is clicked start station3 timer
 	$(".playThree").click(function() {		
 		if(station3.running === false && $(station3['crewSpan']).html() != "") {
 			station3.startCountdown();
 		}
 	});
 
-	//When submit crew is pushed set and display crew order, set first crews to stations
+	//When submit button on crew form is clicked set and display crew order, set first crews to stations
 	$("#submit-crew").click(function() {
 		crewSet();		
 		onDeck.reset();
@@ -342,11 +338,15 @@ $(document).ready(function() {
 		loadCrews();						
 	});
 	
-	//When adjust-timer-minutes submit is pushed adjust timers to user input minutes
+	//When submit button on 'adjust timer minutes' form is clicked adjust timers to user input minutes
 	$("#submit-time").click(function() {			
 		onDeck.newTime();
 		station1.newTime();
 		station2.newTime();
-		station3.newTime();		
+		station3.newTime();
+		onDeck.reset();
+		station1.reset();
+		station2.reset();
+		station3.reset();		
 	});
 });
