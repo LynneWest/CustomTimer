@@ -1,5 +1,5 @@
 # Custom Countdown Timer
-This custom countdown timer is used for practical lab exams given by Professor Mastin at Cal Poly, San Luis Obispo. Developed with JavaScript, HTML, and CSS.
+######This custom countdown timer is used for practical lab exams given by Professor Mastin at Cal Poly, San Luis Obispo. Developed with JavaScript, HTML, and CSS.
 
 ## Exam Process Summary
 Crews, comprised of several students, complete practical exams at several lab stations. Crews have a set amount of time at each station, when that time runs out, they move on to the next station and have a set amount of time there. Once one crew is finished at a station, another crew begins taking the exam at that station. The order that the crews take the exam in is determined prior to the day of testing.
