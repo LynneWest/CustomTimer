@@ -182,6 +182,14 @@ $(document).ready(function() {
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
 	
+	//Put crews to timers
+	function loadCrews() {	
+		onDeck.nextCrew();
+		onDeck.nextCrew();
+		station1.nextCrew();		
+	}	
+	loadCrews();
+
 	//Reset all timer minutes and crew indexes
 	function resetAll() {
 		onDeck.reset();
@@ -189,9 +197,7 @@ $(document).ready(function() {
 		station2.reset();
 		station3.reset();
 		crewSet();
-		onDeck.nextCrew();
-		onDeck.nextCrew();
-		station1.nextCrew();
+		loadCrews();
 		$(station2['crewSpan']).html("");
 		$(station3['crewSpan']).html("");
 	}
