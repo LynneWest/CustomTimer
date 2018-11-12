@@ -103,7 +103,7 @@
 						<p class="crew-order"></p>
 						<h4>Enter Crew Order:</h4>
 						<form>
-							<input type="text" class="form-control input-lg" id="order" placeholder="separate by comma">
+							<input type="text" autocomplete="off" class="form-control input-lg" id="order" placeholder="separate by comma">
 						</form>
 						<button type="button" class="btn submit" id="submit-crew">Submit</button>						
 					</div>
@@ -112,19 +112,19 @@
 						<form id="adjust-timers" class="form-inline">
 							<div class="form-group">
 								<label for="deckInput">On Deck Timer: </label>
-								<input type="number" class="form-control input-lg input-minutes" id="deckInput" min=1>
+								<input type="number" autocomplete="off" class="form-control input-lg input-minutes" id="deckInput" min=1>
 							</div>
 							<div class="form-group">
 								<label for="oneInput">Station 1 Timer:</label>
-								<input type="number" class="form-control input-lg input-minutes" id="oneInput" min=1>
+								<input type="number" autocomplete="off" class="form-control input-lg input-minutes" id="oneInput" min=1>
 							</div>
 							<div class="form-group">
 								<label for="twoInput">Station 2 Timer: </label>
-								<input type="number" class="form-control input-lg input-minutes" id="twoInput" min=1>
+								<input type="number" autocomplete="off" class="form-control input-lg input-minutes" id="twoInput" min=1>
 							</div>
 							<div class="form-group hidden" id="three-time-box" >
 								<label for="threeInput">Station 3 Timer: </label>
-								<input type="number" class="form-control input-lg input-minutes" id="threeInput" min=1>
+								<input type="number" autocomplete="off" class="form-control input-lg input-minutes" id="threeInput" min=1>
 							</div>							
 						</form>
 						<button type="button" class="btn submit" id="submit-time">Submit</button>						
