@@ -58,8 +58,9 @@ button:focus, button:active, .btn:focus, .btn:active {
 }
 .dis-btn, .dis-btn:hover {
 	cursor: not-allowed;
-	background-color: #888;
-	color: #444 !important;
+	background-color: rgb(136, 136, 136);
+	color: rgb(68, 68, 68) !important;
+	opacity: .4;
 } 
 
 /* Timers */
