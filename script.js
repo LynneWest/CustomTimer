@@ -217,6 +217,7 @@ $(document).ready(function() {
 		loadCrews();		
 		station2.noCrew();
 		station3.noCrew();
+		$("#go").removeClass("dis-btn");
 	}
 	
 	//Start and move crews through timers	
@@ -250,7 +251,8 @@ $(document).ready(function() {
 			if(station3.crew > 0) {
 				station3.startCountdown();
 			}
-		}			
+		}
+		$("#go").addClass("dis-btn");					
 	});
 
 	//When reset clicked reset all timers and set first crews to timers
