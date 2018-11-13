@@ -93,6 +93,24 @@ button:focus, button:active, .btn:focus, .btn:active {
 	  background-color: black;
 	}
   }
+  .fade-grey {	
+	background-color: rgb(30,30,30);
+	color: rgb(50, 50, 50);
+	-webkit-transition: background-color 1s;
+	-moz-transition: background-color 1s;
+	-ms-transition: background-color 1s;
+	-o-transition: background-color 1s;
+	transition: background-color 1s;
+	-webkit-transition: color 1s;
+	-moz-transition: color 1s;
+	-ms-transition: color 1s;
+	-o-transition: color 1s;
+	transition: color 1s;
+  }
+  .is-grey {
+	background-color: rgb(30,30,30);
+	color: rgb(50, 50, 50);
+  }
 
 /* ----- Clock row ----- */
 .clock-row {

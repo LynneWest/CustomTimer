@@ -72,6 +72,7 @@ $(document).ready(function() {
 		let min = minute-1;
 		let sec = 60;
 		const self = this;
+		this.timerID = timerID;
 		this.crewSpan = crewSpan;		
 		this.running = false;				
 		this.done = false;				
@@ -94,8 +95,8 @@ $(document).ready(function() {
 		function countdown() {			
 			sec--;
 						
-			if(min===0 && sec===0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01
-				$(self.crewSpan).html("");
+			if(min===0 && sec===0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01				
+				self.noCrew();
 				self.stopCountdown();											
 				self.done = true;										
 				self.resetTime();
@@ -166,14 +167,23 @@ $(document).ready(function() {
 		//Move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function() {			
-			if(crewArray[this.crew] === undefined) {
-				$(crewSpan).html("");								
+			if(crewArray[this.crew] === undefined) {				
+				self.noCrew();								
 			}
 			else {
 				$(crewSpan).html(crewArray[this.crew]);							
-				this.crew++;				
+				this.crew++;
+				$(timerID).removeClass("fade-grey");
+				$(timerID).removeClass("is-grey");				
 			}					
 		}
+		this.noCrew = function() {
+			$(crewSpan).html("");
+			$(timerID).addClass("fade-grey");
+		}
+		this.isGrey = function() {			
+				$(timerID).addClass("is-grey");			
+		}		
 	}//Timer constructor end
 
 	//Create new Timer objects
@@ -182,6 +192,13 @@ $(document).ready(function() {
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
 	
+	//Make timers grey on document ready if no crew is assigned
+	if(Timer.prototype['crewSpan'] === undefined) {
+		onDeck.isGrey();
+		station2.isGrey();
+		station3.isGrey();
+	}
+
 	//Put crews to timers
 	function loadCrews() {	
 		onDeck.nextCrew();
@@ -197,9 +214,9 @@ $(document).ready(function() {
 		station2.reset();
 		station3.reset();
 		crewSet();
-		loadCrews();
-		$(station2['crewSpan']).html("");
-		$(station3['crewSpan']).html("");
+		loadCrews();		
+		station2.noCrew();
+		station3.noCrew();
 	}
 	
 	//Start and move crews through timers	
