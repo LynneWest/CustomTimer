@@ -205,7 +205,7 @@ input {
 }
 #setup h1 {	
 	font-weight: bold;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 #setup h4 {
 	font-size: 20px;
@@ -224,9 +224,14 @@ label {
 .crew-setup .crew-order {
 	margin-bottom: 30px;
 }
-/* .three-mins-in {
-	height: 123px;
-} */
+.min-setup-div {
+	background-color: rgba(255,255,255,.4);
+	border-radius: 3px;
+	margin-bottom: 20px;
+}
+.min-setup-div h4 {
+	padding-top: 10px;
+}
 #adjust-timers label {
 	text-align: left;
 	width: 101px;
@@ -243,9 +248,10 @@ label {
 .deckInput-div {
 	border-radius: 3px;
 	width: 75%;	
-	margin: 10px auto;
+	margin: 10px auto 0;
 	padding: 5px;
-	background-color: rgb(190, 190, 190);	
+	background-color: rgba(255,255,255,.7);
+
 }
 .deckInput-div label {
 	width: 130px !important;
