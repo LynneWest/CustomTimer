@@ -371,20 +371,6 @@ $(document).ready(function() {
 	$("#submit-crew").click(function() {				
 		resetAll();						
 	});	
-	
-	// function tooLong() {
-	// 	onDeck.newTime();		
-	// 	const odTime = onDeck.minute;		
-	// 	document.getElementById("oneInput").max = odTime;
-	// 	if(station1.minute > onDeck.minute) {			
-	// 		$("#oneInput").val(onDeck.minute);				
-	// 	}		
-	// }
-	// tooLong();
-
-	// $("input[id=deckInput]").change(function() {
-	// 	onDeck.deckTime(station1.minute);		
-	// });	
 
 	//When submit button on 'adjust timer minutes' form is clicked adjust timers to user input minutes
 	$("#submit-time").click(function() {		
