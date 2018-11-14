@@ -133,30 +133,18 @@ $(document).ready(function() {
 		}//countdown() end
 		
 		//Adjust time to minutes from input form
-		this.newTime = function() {
-			if($(input).val() !== "") {
-				minute = $(input).val();
-				min = $(input).val()-1;				
-				$(timerID).html(minute+":00");								
-			}						
+		this.newTime = function() {			
+			minute = $(input).val();
+			min = $(input).val()-1;				
+			$(timerID).html(minute+":00");									
 		}
 
 		//calculate deckTimer minutes
 		let deckIn;		
 		let oneIn;				
-		this.deckTime = function() {			
-			if($('#deckInput').val() !== "") {								
-				deckIn = parseInt($('#deckInput').val());												
-			}
-			else {
-				deckIn = deckTimer
-			}
-			if($('#oneInput').val() !== "") {
-				oneIn = parseInt($('#oneInput').val());				
-			}
-			else {
-				oneIn = stationOneTimer
-			}
+		this.deckTime = function() {											
+			deckIn = parseInt($('#deckInput').val());			
+			oneIn = parseInt($('#oneInput').val());						
 			minute = deckIn + oneIn;
 			min = minute-1;
 			$(timerID).html(minute+":00");														
