@@ -21,13 +21,13 @@ $(document).ready(function() {
 	clock();
 	
 	//Defualt times
-	const deckTimer = 12;
+	const deckTimer = 2;
 	const stationOneTimer = 10;
 	const stationTwoTimer = 10;
-	const stationThreeTimer = 10;
+	const stationThreeTimer = 10;		 
 	
 	//Display defualt times in timers
-	$("#deck-timer").html(deckTimer+":00");
+	$("#deck-timer").html(deckTimer+stationOneTimer+":00");
 	$("#timer-one").html(stationOneTimer+":00");
 	$("#timer-two").html(stationTwoTimer+":00");
 	$("#timer-three").html(stationThreeTimer+":00");	
@@ -72,6 +72,7 @@ $(document).ready(function() {
 		let min = minute-1;
 		let sec = 60;
 		const self = this;
+		this.minute = minute;
 		this.timerID = timerID;
 		this.crewSpan = crewSpan;		
 		this.running = false;				
@@ -129,8 +130,8 @@ $(document).ready(function() {
 					}					
 				}							
 			}						
-		}//countdown() end		
-
+		}//countdown() end
+		
 		//Adjust time to minutes from input form
 		this.newTime = function() {
 			if($(input).val() !== "") {
@@ -139,6 +140,27 @@ $(document).ready(function() {
 				$(timerID).html(minute+":00");								
 			}						
 		}
+
+		//calculate deckTimer minutes
+		let deckIn;		
+		let oneIn;				
+		this.deckTime = function() {			
+			if($('#deckInput').val() !== "") {								
+				deckIn = parseInt($('#deckInput').val());												
+			}
+			else {
+				deckIn = deckTimer
+			}
+			if($('#oneInput').val() !== "") {
+				oneIn = parseInt($('#oneInput').val());				
+			}
+			else {
+				oneIn = stationOneTimer
+			}
+			minute = deckIn + oneIn;
+			min = minute-1;
+			$(timerID).html(minute+":00");														
+		}				
 
 		//Add one minute to timer
 		this.addMin = function() {
@@ -159,7 +181,7 @@ $(document).ready(function() {
 			$(timerID).removeClass("red-timer");
 			self.stopCountdown();			
 			min = minute-1;			
-			sec = 60;
+			sec = 60;			
 			$(timerID).html(minute+":00");
 			$(timerID).removeClass("fade-red");			
 		}
@@ -182,16 +204,18 @@ $(document).ready(function() {
 			$(timerID).addClass("fade-grey");
 		}
 		this.isGrey = function() {			
-				$(timerID).addClass("is-grey");			
+			$(timerID).addClass("is-grey");			
 		}		
-	}//Timer constructor end
+	}//Timer constructor end	
 
 	//Create new Timer objects
 	const onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
 	const station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput", ".oneCrew");
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
 	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
-	
+
+	onDeck.deckTime(station1.minute);
+
 	//Make timers grey on document ready if no crew is assigned
 	if(Timer.prototype['crewSpan'] === undefined) {
 		onDeck.isGrey();
@@ -208,7 +232,7 @@ $(document).ready(function() {
 	loadCrews();
 
 	//Reset all timer minutes and crew indexes
-	function resetAll() {
+	function resetAll() {		
 		onDeck.reset();
 		station1.reset();
 		station2.reset();
@@ -346,14 +370,28 @@ $(document).ready(function() {
 	//When submit button on crew form is clicked set and display crew order, set first crews to stations
 	$("#submit-crew").click(function() {				
 		resetAll();						
-	});
+	});	
 	
+	// function tooLong() {
+	// 	onDeck.newTime();		
+	// 	const odTime = onDeck.minute;		
+	// 	document.getElementById("oneInput").max = odTime;
+	// 	if(station1.minute > onDeck.minute) {			
+	// 		$("#oneInput").val(onDeck.minute);				
+	// 	}		
+	// }
+	// tooLong();
+
+	// $("input[id=deckInput]").change(function() {
+	// 	onDeck.deckTime(station1.minute);		
+	// });	
+
 	//When submit button on 'adjust timer minutes' form is clicked adjust timers to user input minutes
-	$("#submit-time").click(function() {			
-		onDeck.newTime();
+	$("#submit-time").click(function() {		
 		station1.newTime();
+		onDeck.deckTime(station1.minute);
 		station2.newTime();
-		station3.newTime();
-		resetAll();		
+		station3.newTime();		
+		resetAll();				
 	});
 });
