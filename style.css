@@ -7,7 +7,20 @@ body {
 }
 .trnsprnt {
 	opacity: 0;
-}
+	-webkit-transition: opacity 1s;
+	-moz-transition: opacity 1s;
+	-ms-transition: opacity 1s;
+	-o-transition: opacity 1s;
+	transition: opacity 1s;	
+}  
+.fade-in {
+	opacity: 1;
+	-webkit-transition: opacity 1s;
+	-moz-transition: opacity 1s;
+	-ms-transition: opacity 1s;
+	-o-transition: opacity 1s;
+	transition: opacity 1s;	
+}  
 
 /* ----- Buttons ----- */
 .btn {
@@ -158,6 +171,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 	border-radius: 3px;
 	margin-top:20px;
 	padding: 10px;
+	height: 317px;
 }
 .timers-row h2 {
 	font-weight: bold;

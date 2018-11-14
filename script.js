@@ -355,13 +355,13 @@ $(document).ready(function() {
 		if($("#2").is(":checked")) {
 			$(".two-timers").removeClass("hidden");
 			$(".three-timers").addClass("hidden");
-			$("#three-time-box").addClass("trnsprnt");			
+			$("#three-time-box").removeClass("fade-in");			
 			threeHidden = true;        		
 		}
 		else {
 			$(".two-timers").addClass("hidden");
 			$(".three-timers").removeClass("hidden");
-			$("#three-time-box").removeClass("trnsprnt");			
+			$("#three-time-box").addClass("fade-in");			
 			threeHidden = false;				
 		}		 
 		resetAll();       
