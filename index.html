@@ -98,6 +98,35 @@
 							<label><input type="radio" name="stations" id="3">3 Stations</label>
 						</div>
 					</div>
+					<div class="col-sm-4 min-setup-div">
+						<h4>Adjust Timer Minutes:</h4>
+						<form id="adjust-timers" class="form-inline" autocomplete="off">							
+							<div class="three-mins-in">
+								<div class="form-group">
+									<label for="oneInput" class="col-5">Station One: </label>
+									<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes col-3" id="oneInput" value='10' min="1" max="60">
+									<span class="col-4">  minutes</span>
+								</div>
+								<div class="form-group">
+									<label for="twoInput" class="col-5">Station Two: </label>
+									<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes col-3" id="twoInput" value='10' min="1" max="60">
+									<span class="col-4">  minutes</span>
+								</div>
+								<div class="form-group hidden" id="three-time-box" >
+									<label for="threeInput" class="col-5">Station Three: </label>
+									<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes col-3" id="threeInput" value='10' min="1" max="60">
+									<span class="col-4">  minutes</span>
+								</div>
+							</div>
+							
+							<div class="deckInput-div">
+								<label for="deckInput">On Deck Time is: </label><br>
+								<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg" id="deckInput" value='2' min="1" max="60">
+								<p>more minutes than Station One</p>
+							</div>							
+						</form>
+						<button type="button" class="btn submit" id="submit-time">Submit</button>						
+					</div> <!-- min-setup-div end -->
 					<div class="col-sm-4 crew-setup">
 						<h4>Current Crew Order:</h4>
 						<p class="crew-order"></p>
@@ -106,29 +135,7 @@
 							<input type="text" autocomplete="off" class="form-control input-lg" id="order" placeholder="separate by comma">
 						</form>
 						<button type="button" class="btn submit" id="submit-crew">Submit</button>						
-					</div>
-					<div class="col-sm-4">
-						<h4>Adjust Timer Minutes:</h4>
-						<form id="adjust-timers" class="form-inline" autocomplete="off">
-							<div class="form-group">
-								<label for="deckInput">On Deck Timer: </label>
-								<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes" id="deckInput" min="1" max="60">
-							</div>
-							<div class="form-group">
-								<label for="oneInput">Station 1 Timer: </label>
-								<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes" id="oneInput" min="1" max="60">
-							</div>
-							<div class="form-group">
-								<label for="twoInput">Station 2 Timer: </label>
-								<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes" id="twoInput" min="1" max="60">
-							</div>
-							<div class="form-group hidden" id="three-time-box" >
-								<label for="threeInput">Station 3 Timer: </label>
-								<input type="number" oninput="validity.valid||(value='')" class="form-control input-lg input-minutes" id="threeInput" min="1" max="60">
-							</div>							
-						</form>
-						<button type="button" class="btn submit" id="submit-time">Submit</button>						
-					</div>
+					</div> <!-- crew-setup end -->					
 				</div>								
 			</div>
 		</div><!-- .setup-container end -->
