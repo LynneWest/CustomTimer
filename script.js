@@ -230,6 +230,7 @@ $(document).ready(function() {
 		station2.noCrew();
 		station3.noCrew();
 		$("#go").removeClass("dis-btn");
+		$("#next").removeClass("dis-btn");
 	}
 	
 	//Start and move crews through timers	
@@ -264,7 +265,8 @@ $(document).ready(function() {
 				station3.startCountdown();
 			}
 		}
-		$("#go").addClass("dis-btn");					
+		$("#go").addClass("dis-btn");
+		$("#next").addClass("dis-btn");					
 	});
 
 	//When reset clicked reset all timers and set first crews to timers
@@ -273,13 +275,16 @@ $(document).ready(function() {
 	});
 	
 	//When next is clicked move all crews through stations
-	$("#next").click(function()	{		
-		onDeck.nextCrew();
-		station1.nextCrew();
-		station2.nextCrew();
-		if(station2.crew > 1) {
-			station3.nextCrew();
-		}				
+	$("#next").click(function()	{
+		if(onDeck.running === false && station1.running === false && station2.running === false && station3.running === false) {
+			onDeck.nextCrew();
+			station1.nextCrew();
+			station2.nextCrew();
+			if(station2.crew > 1) {
+				station3.nextCrew();
+			}
+		}		
+						
 	});
 
 	//When station1 pause is clicked pause station1 timer and onDeck timer	
