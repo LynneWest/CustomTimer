@@ -20,13 +20,13 @@ $(document).ready(function() {
 	}
 	clock();
 	
-	//Defualt times
+	//Default times
 	const deckTimer = 2;
 	const stationOneTimer = 10;
 	const stationTwoTimer = 10;
 	const stationThreeTimer = 10;		 
 	
-	//Display defualt times in timers
+	//Display default times in timers
 	$("#deck-timer").html(deckTimer+stationOneTimer+":00");
 	$("#timer-one").html(stationOneTimer+":00");
 	$("#timer-two").html(stationTwoTimer+":00");
@@ -41,29 +41,30 @@ $(document).ready(function() {
 	}
 
 	//Set and display crew order
-	let crewArray;	
+	let crewNumArray;
+	let crewArray = [];	
 	let crewOrder;	
 	function crewSet() {								
 		crewOrder = $("#order").val(); //Put crewOrder from form into string	
 		if(crewOrder != "") {					
-			crewArray = crewOrder.split(",");//Put crewOrder values into crewArray
+			crewNumArray = crewOrder.split(",");//Put crewOrder values into crewArray
 			localStorage.setObj("crews", crewArray);//Store CrewArray locally	
 		}
 		else if(localStorage.getObj("crews") != null) {
-			crewArray = localStorage.getObj("crews");//Get locally stored CrewArray						
+			crewNumArray = localStorage.getObj("crews");//Get locally stored CrewArray						
 		}
 		else {
-			crewArray = [1,2,3,4,5,6];//Default crew order			
+			crewNumArray = [1,2,3,4,5,6];//Default crew order			
 		}
 		
 		//Display crewOrder
-		crewOrder = crewArray.join(", ");
+		crewOrder = crewNumArray.join(", ");
 		$(".crew-order").html(crewOrder);
 
 		//Add "Crew " in front of each array element
-		for (let i=0; i < crewArray.length; i++) {		
-			crewArray[i] = "Crew "+crewArray[i];
-		}								
+		crewNumArray.forEach(function(num) {			
+			crewArray.push("Crew "+num);						
+		});										
 	}
 	crewSet();	
 	
