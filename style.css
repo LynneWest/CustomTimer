@@ -31,6 +31,9 @@ body {
 	font-size: medium;	
 	margin: 5px;
 }
+.btn i {
+	padding-right: 8px;
+}
 #go {
 	font-size: 50px;
 	color: black;	
@@ -41,15 +44,12 @@ body {
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;			
 }
-#reset, #next {	
+#reset, #next, #setup-button, #pauseAll {	
 	width: 35%;
 }
 #reset:hover {	
 	background-color: rgb(156, 24, 24);
 	color: white;
-}
-#setup-button {
-	width: 28%;	
 }
 #top {	
 	border: 2px solid black;
@@ -72,7 +72,8 @@ a, a:hover, a:focus {
 button:focus, button:active, .btn:focus, .btn:active {
 	outline: none !important;
 }
-.dis-btn, .dis-btn:hover {
+
+.btn:disabled, .btn[disabled] {
 	cursor: not-allowed;
 	background-color: rgb(136, 136, 136);
 	color: rgb(68, 68, 68) !important;
@@ -83,8 +84,7 @@ button:focus, button:active, .btn:focus, .btn:active {
 .timer {
 	background-color: black;	
 	color: white;
-	font-size: 120px;
-	/* width: 100%; */
+	font-size: 120px;	
 	text-align: center;
 	line-height: 1.2;
 }
@@ -119,16 +119,16 @@ button:focus, button:active, .btn:focus, .btn:active {
   .fade-grey {	
 	background-color: rgb(30,30,30);
 	color: rgb(50, 50, 50);
-	-webkit-transition: background-color 1s;
-	-moz-transition: background-color 1s;
-	-ms-transition: background-color 1s;
-	-o-transition: background-color 1s;
-	transition: background-color 1s;
-	-webkit-transition: color 1s;
-	-moz-transition: color 1s;
-	-ms-transition: color 1s;
-	-o-transition: color 1s;
-	transition: color 1s;
+	-webkit-transition: background-color .5s;
+	-moz-transition: background-color .5s;
+	-ms-transition: background-color .5s;
+	-o-transition: background-color .5s;
+	transition: background-color .5s;
+	-webkit-transition: color .5s;
+	-moz-transition: color .5s;
+	-ms-transition: color .5s;
+	-o-transition: color .5s;
+	transition: color .5s;
   }
   .is-grey {
 	background-color: rgb(30,30,30);
@@ -280,7 +280,15 @@ label {
 }
 
 /* ----- @media ----- */
-@media(max-width: 992px) {	
+@media(max-width: 992px) {
+	#clock {
+		height: 150px;
+		width: 150px;	
+	}
+	#clock p {
+		font-size: 30px;	
+		padding-top: 52px;		
+	}	
 	.timer {
 		font-size: 100px;
 	}
@@ -290,7 +298,7 @@ label {
 	.three-timers .timer {
 		font-size: 80px;
 	}
-	#reset, #next, #setup-button {	
+	#reset, #next, #setup-button, #pauseAll {	
 		width: 50%;
 	}
 	#go {
@@ -298,6 +306,9 @@ label {
 	}
 }
 @media(max-width: 1200px) {
+	.btn i {
+		display: none;
+	}
 	.deckCrew {
 		font-size: 35px;
 	}

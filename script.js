@@ -42,13 +42,14 @@ $(document).ready(function() {
 
 	//Set and display crew order
 	let crewNumArray;
-	let crewArray = [];	
+	let crewArray;	
 	let crewOrder;	
-	function crewSet() {								
+	function crewSet() {
+		crewArray = [];								
 		crewOrder = $("#order").val(); //Put crewOrder from form into string	
 		if(crewOrder != "") {					
 			crewNumArray = crewOrder.split(",");//Put crewOrder values into crewArray
-			localStorage.setObj("crews", crewArray);//Store CrewArray locally	
+			localStorage.setObj("crews", crewNumArray);//Store crewArray locally	
 		}
 		else if(localStorage.getObj("crews") != null) {
 			crewNumArray = localStorage.getObj("crews");//Get locally stored CrewArray						
@@ -63,10 +64,9 @@ $(document).ready(function() {
 
 		//Add "Crew " in front of each array element
 		crewNumArray.forEach(function(num) {			
-			crewArray.push("Crew "+num);						
-		});										
-	}
-	crewSet();	
+			crewArray.push("Crew "+num);									
+		});												
+	}	
 	
 	//Constructor for timers (time in minutes, timer div, input from #adjust-timers form, .crew h1)
 	function Timer(minute,timerID,input,crewSpan) {
@@ -75,7 +75,8 @@ $(document).ready(function() {
 		const self = this;
 		this.minute = minute;
 		this.timerID = timerID;
-		this.crewSpan = crewSpan;		
+		this.crewSpan = crewSpan;
+		this.hasCrew;		
 		this.running = false;				
 		this.done = false;				
 		this.startTimer;
@@ -99,6 +100,7 @@ $(document).ready(function() {
 						
 			if(min===0 && sec===0) { // use 'min < 0' for 0:00, 'min===0 && sec===0' for 0:01				
 				self.noCrew();
+				$(timerID).addClass("fade-grey");
 				self.stopCountdown();											
 				self.done = true;										
 				self.resetTime();
@@ -140,7 +142,7 @@ $(document).ready(function() {
 			$(timerID).html(minute+":00");									
 		}
 
-		//calculate deckTimer minutes
+		//Calculate deckTimer minutes
 		let deckIn;		
 		let oneIn;				
 		this.deckTime = function() {											
@@ -154,7 +156,7 @@ $(document).ready(function() {
 		//Add one minute to timer
 		this.addMin = function() {
 			min++;
-			if(this.running === false) {
+			if(!this.running) {
 				$(timerID).html((min+1)+":00");	
 			}			
 		}
@@ -172,75 +174,73 @@ $(document).ready(function() {
 			min = minute-1;			
 			sec = 60;			
 			$(timerID).html(minute+":00");
-			$(timerID).removeClass("fade-red");			
+			$(timerID).removeClass("fade-red");
+			this.pause = false;			
 		}
 
 		//Move crew numbers through stations
 		this.crew = 0;
 		this.nextCrew = function() {			
 			if(crewArray[this.crew] === undefined) {				
-				self.noCrew();								
+				self.noCrew();
+				$(timerID).addClass("fade-grey");												
 			}
 			else {
 				$(crewSpan).html(crewArray[this.crew]);							
 				this.crew++;
 				$(timerID).removeClass("fade-grey");
-				$(timerID).removeClass("is-grey");				
+				$(timerID).removeClass("is-grey");
+				this.hasCrew = true;				
 			}					
 		}
 		this.noCrew = function() {
-			$(crewSpan).html("");
-			$(timerID).addClass("fade-grey");
-		}
-		this.isGrey = function() {			
+			$(crewSpan).html("");			
+			this.hasCrew = false;
 			$(timerID).addClass("is-grey");			
-		}		
+		}				
 	}//Timer constructor end	
 
 	//Create new Timer objects
 	const onDeck = new Timer(deckTimer, "#deck-timer", "#deckInput", ".deckCrew");
 	const station1 = new Timer(stationOneTimer, ".timer-one", "#oneInput", ".oneCrew");
 	const station2 = new Timer(stationTwoTimer, ".timer-two", "#twoInput", ".twoCrew");
-	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");		
+	const station3 = new Timer(stationThreeTimer, ".timer-three", "#threeInput", ".threeCrew");
+	
+	const timers = [onDeck,station1,station2,station3];
 
 	onDeck.deckTime(station1.minute);
-
-	//Make timers grey on document ready if no crew is assigned
-	if(Timer.prototype['crewSpan'] === undefined) {
-		onDeck.isGrey();
-		station2.isGrey();
-		station3.isGrey();
-	}
+	resetAll();
 
 	//Put crews to timers
 	function loadCrews() {	
 		onDeck.nextCrew();
 		onDeck.nextCrew();
 		station1.nextCrew();		
-	}	
-	loadCrews();
+	}		
 
 	//Reset all timer minutes and crew indexes
-	function resetAll() {		
-		onDeck.reset();
-		station1.reset();
-		station2.reset();
-		station3.reset();
+	function resetAll() {
+		timers.forEach(function(timer){
+			timer.reset();
+		});
 		crewSet();
 		loadCrews();		
 		station2.noCrew();
-		station3.noCrew();
-		$("#go").removeClass("dis-btn");
-		$("#next").removeClass("dis-btn");
+		station3.noCrew();		
+		$("#next").prop("disabled", false);
+		$("#go").prop("disabled", false);
+		$(".play").prop("disabled", false);
+		$("#pauseAll").prop("disabled", true);	
+		$("#add-min-button").prop("disabled", false);	
 	}
 	
 	//Start and move crews through timers	
 	function timerDone() {
-		if((station3.done && station3.crew+1 < station2.crew || station2.done && station3.crew < station2.crew) && threeHidden === false && station3.running === false && crewArray[station3.crew] != undefined && station3.pause === false) {
+		if((station3.done && station3.crew+1 < station2.crew || station2.done && station3.crew < station2.crew) && !threeHidden && !station3.running && crewArray[station3.crew] != undefined && !station3.pause) {
 			station3.nextCrew();
 			station3.startCountdown();
 		}
-		if((station2.done && station2.crew+1 < station1.crew || station1.done && station2.crew < station1.crew) && station2.running === false && crewArray[station2.crew] != undefined && station2.pause === false) {			
+		if((station2.done && station2.crew+1 < station1.crew || station1.done && station2.crew < station1.crew) && !station2.running && crewArray[station2.crew] != undefined && !station2.pause) {			
 			station2.nextCrew();
 			station2.startCountdown();			
 		}
@@ -252,22 +252,50 @@ $(document).ready(function() {
 			onDeck.nextCrew();						
 			onDeck.startCountdown();			
 		}					
-	}	
-
+	}
+	
+	//Pause timers
+	function pauseDeck() {
+		if(onDeck.running) {
+			onDeck.stopCountdown();
+			onDeck.pause = true;
+		}		
+	}
+	function pause1() {
+		if(station1.running) {
+			onDeck.stopCountdown();
+			station1.stopCountdown();
+			onDeck.pause = true;
+			station1.pause = true;
+		}
+	}
+	function pause2() {
+		if(station2.running) {
+			station2.stopCountdown();	
+			station2.pause = true;
+		}
+	}
+	function pause3() {
+		if(station3.running) {
+			station3.stopCountdown();
+			station3.pause = true;
+		}
+	}
+	
 	//When go clicked, start all timers with crews, if no timers are running
 	$("#go").click(function() {
-		if(onDeck.running === false && station1.running === false && station2.running === false && station3.running === false) {			
-			onDeck.startCountdown();
-			station1.startCountdown();
-			if(station2.crew > 0) {
-				station2.startCountdown();
-			}
-			if(station3.crew > 0) {
-				station3.startCountdown();
-			}
-		}
-		$("#go").addClass("dis-btn");
-		$("#next").addClass("dis-btn");					
+		if(!onDeck.running && !station1.running  && !station2.running && !station3.running) {			
+			timers.forEach(function(timer) {
+				if(timer.hasCrew) {
+					timer.startCountdown();
+				}
+			});
+		}		
+		$("#next").prop("disabled", true);
+		$("#go").prop("disabled", true);
+		$(".play").prop("disabled", false);
+		$("#pauseAll").prop("disabled", false);
+		$("#add-min-button").prop("disabled", false);					
 	});
 
 	//When reset clicked reset all timers and set first crews to timers
@@ -277,53 +305,55 @@ $(document).ready(function() {
 	
 	//When next is clicked move all crews through stations
 	$("#next").click(function()	{
-		if(onDeck.running === false && station1.running === false && station2.running === false && station3.running === false) {
+		if(!onDeck.running && !onDeck.pause && !station1.running && !station1.pause && !station2.running && !station2.pause && !station3.running && !station3.pause) {
 			onDeck.nextCrew();
 			station1.nextCrew();
 			station2.nextCrew();
 			if(station2.crew > 1) {
 				station3.nextCrew();
 			}
-		}		
-						
+		}						
 	});
+
+	//Pause all timers
+	$("#pauseAll").click(function() {
+		pauseDeck();
+		pause1();
+		pause2();
+		pause3();		
+		$("#go").prop("disabled", false);
+		$(".play").prop("disabled", true);
+		$("#pauseAll").prop("disabled", true);
+		$("#add-min-button").prop("disabled", true);				
+	});	
 
 	//When station1 pause is clicked pause station1 timer and onDeck timer	
 	$(".pauseOne").click(function()	{
-		if(station1.running) {
-			onDeck.stopCountdown();
-			station1.stopCountdown();
-			onDeck.pause = true;
-			station1.pause = true;
-		}				
+		pause1();	
 	});
 
 	//When station2 pause is clicked pause station2 timer 
 	$(".pauseTwo").click(function()	{
-		if(station2.running) {
-			station2.stopCountdown();	
-			station2.pause = true;
-		}			
+		pause2();
 	});
 
 	//When station3 pause is clicked pause station3 timer
 	$(".pauseThree").click(function() {
-		if(station3.running) {
-			station3.stopCountdown();
-			station3.pause = true;
-		}				
+		pause3();			
 	});
 
 	//When 'add 1 minute' button is clicked add one minute to onDeck timer
 	$("#add-min-button").click(function() {
-		onDeck.addMin();
+		if(onDeck.hasCrew){
+			onDeck.addMin();
+		}		
 	});
 
 	//When station1 play is clicked start station1, start onDeck if it has a crew
 	$(".playOne").click(function() {				
-		if (station1.running === false && $(station1['crewSpan']).html() != "") {
+		if(!station1.running && station1.hasCrew) {
 			station1.startCountdown();
-			if(crewArray[station1.crew] != undefined && onDeck.running === false) {
+			if(onDeck.hasCrew && !onDeck.running) {
 				onDeck.startCountdown();
 			}
 		}				
@@ -331,14 +361,14 @@ $(document).ready(function() {
 
 	//When station2 play is clicked start station2 timer
 	$(".playTwo").click(function() {		
-		if(station2.running === false && $(station2['crewSpan']).html() != "") {	
+		if(!station2.running && station2.hasCrew) {	
 			station2.startCountdown();
 		}				
 	});
 
 	//When station3 play is clicked start station3 timer
 	$(".playThree").click(function() {		
-		if(station3.running === false && $(station3['crewSpan']).html() != "") {
+		if(!station3.running && station3.hasCrew) {
 			station3.startCountdown();
 		}
 	});

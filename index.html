@@ -25,10 +25,12 @@
 			<div class="timers">
 				<div class="row clock-row">
 					<div class="col-sm-4">																
-						<button type="button" class="btn orng" id="go">START</button><br>								
-						<button type="button" class="btn" id="reset">Reset All</button>
-						<button type="button" class="btn" id="next">Next Crew</button><br>
-						<a href="#setup"><button type="button" class="btn" id="setup-button"><span class="glyphicon glyphicon-wrench"></span>  Setup</button></a>
+						<button type="button" class="btn orng" id="go">START</button><br>
+						<button type="button" class="btn" id="reset"><i class="glyphicon glyphicon-repeat"></i>Reset All</button>					
+						<button type="button" class="btn" id="next"><i class="glyphicon glyphicon-step-forward"></i>Next Crew</button>					
+						<button type="button" class="btn" id="pauseAll" disabled><i class="glyphicon glyphicon-pause"></i>Pause All</button>							
+						<a href="#setup"><button type="button" class="btn" id="setup-button"><i class="glyphicon glyphicon-wrench"></i>Setup</button></a>			
+						<!-- <a href="#setup"><button type="button" class="btn" id="setup-button"><span class="glyphicon glyphicon-wrench"></span>  Setup</button></a> -->
 						<!-- <div class="top-crewOrder">
 							<h3>Crew Order: <span class="crew-order"></span></h3>							
 						</div>			 -->
@@ -44,21 +46,21 @@
 						</div>
 					</div>					
 				</div> <!-- .clock-row end -->
-				
+
 				<div class="row two-timers timers-row">					
 					<div class="col-sm-5 crew-div">
 						<h1 class="crew oneCrew"></h1>
 						<div class="timer timer-one" id="timer-one"></div>
 						<h2>Station One<h2>
 						<button type="button" class="btn pauseOne"><span class="glyphicon glyphicon-pause"></span></button>
-						<button type="button" class="btn playOne"><span class="glyphicon glyphicon-play"></span></button>
+						<button type="button" class="btn play playOne"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-5 col-sm-offset-2 crew-div">
 						<h1 class="crew twoCrew"></h1>
 						<div class="timer timer-two" id="timer-two"></div>
 						<h2>Station Two</h2>
 						<button type="button" class="btn pauseTwo"><span class="glyphicon glyphicon-pause"></span></button>
-						<button type="button" class="btn playTwo"><span class="glyphicon glyphicon-play"></span></button>
+						<button type="button" class="btn play playTwo"><span class="glyphicon glyphicon-play"></span></button>
 					</div>									
 				</div> <!-- .two-timers end -->
 				<div class="row three-timers timers-row hidden">					
@@ -67,21 +69,21 @@
 						<div class="timer timer-one" id="timer-one"></div>
 						<h2>Station One<h2>
 						<button type="button" class="btn pauseOne"><span class="glyphicon glyphicon-pause"></span></button>
-						<button type="button" class="btn playOne"><span class="glyphicon glyphicon-play"></span></button>
+						<button type="button" class="btn play playOne"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-4 crew-div">
 						<h1 class="crew twoCrew"></h1>
 						<div class="timer timer-two" id="timer-two"></div>
 						<h2>Station Two</h2>
 						<button type="button" class="btn pauseTwo"><span class="glyphicon glyphicon-pause"></span></button>
-						<button type="button" class="btn playTwo"><span class="glyphicon glyphicon-play"></span></button>
+						<button type="button" class="btn play playTwo"><span class="glyphicon glyphicon-play"></span></button>
 					</div>
 					<div class="col-sm-4 crew-div">
 						<h1 class="crew threeCrew"></h1>
 						<div class="timer timer-three" id="timer-three"></div>
 						<h2>Station Three</h2>
 						<button type="button" class="btn pauseThree"><span class="glyphicon glyphicon-pause"></span></button>
-						<button type="button" class="btn playThree"><span class="glyphicon glyphicon-play"></span></button>
+						<button type="button" class="btn play playThree"><span class="glyphicon glyphicon-play"></span></button>
 					</div>					
 				</div> <!-- .three-timers end -->
 			</div> <!-- .timers end -->			
